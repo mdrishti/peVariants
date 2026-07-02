@@ -1,0 +1,33 @@
+{
+  "level": 1,
+  "title": "Build the Gene",
+  "learning_goal": "Understand that DNA is a sequence of 4 nucleotides (A, T, G, C), that it is read in non-overlapping triplets called codons, and that each codon corresponds to one amino acid via the codon table.",
+  "rules": [
+    "The reference nucleotide sequence and the full codon table are shown on screen the whole time — use them.",
+    "Place all nucleotide tiles in order first, then assign an amino acid tile to each codon.",
+    "You must build all 3 genes (flaA, cadF, ciaB) to finish the level.",
+    "The last codon of each gene is a STOP codon — every gene must end there."
+  ],
+  "materials_provided": [
+    "The codon table (data/codon_table.json)",
+    "One gene's full set of nucleotide squares, shuffled (from data/squares.json -> nucleotide_squares_per_gene)",
+    "That gene's full set of amino acid squares, shuffled (from data/squares.json -> amino_acid_squares_per_gene)"
+  ],
+  "instructions": [
+    "1. Pick up the shuffled nucleotide squares (A/T/G/C tiles) and place them in a row, in the correct order, to rebuild the 48-letter gene sequence.",
+    "2. Once 48 nucleotides are placed, group every 3 tiles into a codon (the game should auto-highlight groups of 3).",
+    "3. Look up each codon in the codon table, then place the matching amino acid square underneath it.",
+    "4. Repeat until all 16 codons have a matching amino acid tile below them (the 16th is STOP). This completes the protein's amino acid sequence.",
+    "5. Do this for each of the 3 genes (flaA, cadF, ciaB) to finish level 1."
+  ],
+  "scoring": {
+    "points_per_correct_nucleotide_placement": 1,
+    "points_per_correct_amino_acid_placement": 2,
+    "bonus_for_no_mistakes": 20
+  },
+  "solutions": {
+    "flaA": { "nucleotide_sequence": "ATGCTTCAAGCAGATATCAACCGTTTAATGGAAGAACTTGACAATTAA", "amino_acid_sequence": "MLQADINRLMEELDN*" },
+    "cadF": { "nucleotide_sequence": "ATGGATAATCGTTATGCACCAGGTGTTAGACTTGGTTATCATTTTTGA", "amino_acid_sequence": "MDNRYAPGVRLGYHF*" },
+    "ciaB": { "nucleotide_sequence": "ATGAATAATTTTAAAGAAATAGCTAAATTGGTTAGAAAATACAAATAG", "amino_acid_sequence": "MNNFKEIAKLVRKYK*" }
+  }
+}

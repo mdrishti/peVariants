@@ -1,0 +1,70 @@
+{
+  "level": 5,
+  "title": "Marked Letters (Methylation and Gene Expression On/Off)",
+  "learning_goal": "Learn that bacteria can chemically 'tag' specific short DNA motifs with a methyl group (methylation), without changing the underlying nucleotide letter. Introduce the idea that where methylation lands relative to a gene can act like a switch that helps control whether that gene is turned ON or OFF.",
+  "simplification_note": "Real bacterial methylation and gene regulation involves many interacting factors (promoter strength, transcription factors, methylation of both DNA strands, timing, etc). This level uses one well-documented type of bacterial methylation motif (recognized by Dcm-family methyltransferases, common across many bacteria and reported in some Campylobacter methylation systems) as a simplified, single-rule teaching model: 'motif present near/within the shown gene fragment -> that cytosine gets methylated -> gene expression OFF in this game. Motif absent -> gene expression ON.' This is a simplification for teaching purposes, not a claim that this is the only or complete real regulatory mechanism.",
+  "rules": [
+    "Methylation never changes a nucleotide letter — the DNA sequence and protein stay identical either way.",
+    "Use the motif table to check each gene fragment for the CCWGG or GATC motif.",
+    "If either motif is present anywhere in the fragment, that gene is OFF. If neither is present, it's ON.",
+    "You must give an ON/OFF answer for all 3 genes (flaA, cadF, ciaB) to finish the level."
+  ],
+  "motif_table": {
+    "description": "New material for this level: a table of known bacterial DNA methylation motifs, which nucleotide within the motif gets methylated, and the simplified on/off rule used in this game.",
+    "motifs": [
+      {
+        "motif": "CCWGG (W = A or T)",
+        "methylated_base": "the first C in the motif becomes 5-methylcytosine (5mC)",
+        "methyltransferase_family": "Dcm-type cytosine methyltransferase",
+        "game_rule": "If this motif is found within the gene fragment shown, that gene's expression is switched OFF in this puzzle."
+      },
+      {
+        "motif": "GATC",
+        "methylated_base": "the A becomes N6-methyladenine (6mA)",
+        "methyltransferase_family": "Dam-type adenine methyltransferase",
+        "game_rule": "If this motif is found within the gene fragment shown, that gene's expression is switched OFF in this puzzle."
+      }
+    ],
+    "default_rule": "If NEITHER motif is present anywhere in the gene fragment, no methylation occurs and the gene's expression stays ON."
+  },
+  "materials_provided": [
+    "The codon table",
+    "The new motif table above",
+    "Normal nucleotide squares for all 3 genes (flaA, cadF, ciaB), PLUS a few special 'methylated' squares - a C or A tile marked with a small flag/star - mixed into the cadF pile only"
+  ],
+  "instructions": [
+    "1. Build all 3 gene sequences as in level 1, using the normal squares.",
+    "2. For each gene, scan the assembled sequence for either motif in the motif table (CCWGG or GATC).",
+    "3. If a 'flagged' methylated square was placed at a position matching a motif, mark that motif as methylated.",
+    "4. Use the game_rule for each motif found to decide: is this gene's expression ON or OFF?",
+    "5. Fill in an ON/OFF answer for each of the 3 genes and check against the solution."
+  ],
+  "gene_analysis": {
+    "flaA": {
+      "nucleotide_sequence": "ATGCTTCAAGCAGATATCAACCGTTTAATGGAAGAACTTGACAATTAA",
+      "motif_found": null,
+      "expression_state": "ON",
+      "reasoning": "Neither CCWGG nor GATC appears anywhere in this fragment, so no methylation switch is triggered - expression stays ON."
+    },
+    "cadF": {
+      "nucleotide_sequence": "ATGGATAATCGTTATGCACCAGGTGTTAGACTTGGTTATCATTTTTGA",
+      "motif_found": "CCAGG (a CCWGG match) at nucleotide position 19-23 (1-based)",
+      "methylated_nucleotide": "the C at position 19 becomes 5-methylcytosine",
+      "expression_state": "OFF",
+      "reasoning": "The CCWGG motif is present and gets methylated, so by the game rule this gene is switched OFF."
+    },
+    "ciaB": {
+      "nucleotide_sequence": "ATGAATAATTTTAAAGAAATAGCTAAATTGGTTAGAAAATACAAATAG",
+      "motif_found": null,
+      "expression_state": "ON",
+      "reasoning": "Neither CCWGG nor GATC appears anywhere in this fragment, so no methylation switch is triggered - expression stays ON."
+    }
+  },
+  "discussion_prompt": "Ask players: unlike levels 2-4, methylation doesn't change any nucleotide LETTER at all - the sequence and the protein it would make are identical. So what actually changed? (Answer: a chemical tag was added to specific bases, and that tag - not a change in the genetic code itself - is what the cell uses to help decide whether to read/express this gene right now. This is an example of 'epigenetics' - control on top of the DNA sequence.)",
+  "scoring": {
+    "points_per_correctly_built_gene": 10,
+    "points_per_correct_motif_identification": 15,
+    "points_per_correct_on_off_call": 15,
+    "bonus_for_explaining_epigenetics_concept": 20
+  }
+}

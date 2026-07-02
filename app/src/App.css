@@ -1,0 +1,236 @@
+.app-shell {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 1.5rem;
+  font-family: system-ui, sans-serif;
+}
+
+header h1 { margin-bottom: 0.25rem; }
+.subtitle { color: #666; margin-top: 0; }
+
+.level-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 1.5rem 0;
+}
+
+.level-btn {
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  background: #f7f7f9;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+.level-btn.active { background: #4b3fd6; color: white; border-color: #4b3fd6; }
+
+.pick-hint { color: #888; }
+
+.level { text-align: left; }
+.gene-desc { font-style: italic; color: #555; }
+
+.sequence-builder, .codon-assigner, .compare-panel { margin-top: 1rem; }
+
+.tile-bank {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  padding: 0.75rem;
+  background: #f2f2f5;
+  border-radius: 10px;
+  min-height: 3rem;
+}
+
+.tile {
+  width: 2.4rem;
+  height: 2.4rem;
+  border-radius: 6px;
+  border: 1px solid #0002;
+  font-weight: 700;
+  font-size: 1.1rem;
+  cursor: pointer;
+}
+.tile.amino { background: #d9c9ff; }
+.tile.amino.selected { outline: 3px solid #4b3fd6; }
+.tile.amino.stop, .amino-slot.stop { background: #ffc9c9; width: auto; padding: 0 0.4rem; font-size: 0.75rem; }
+
+.slots-row, .codon-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+  margin-top: 0.75rem;
+}
+
+.slot {
+  width: 2.4rem;
+  height: 2.4rem;
+  border-radius: 6px;
+  border: 2px dashed #bbb;
+  background: white;
+  font-weight: 700;
+  font-size: 1.1rem;
+  cursor: pointer;
+}
+.slot.filled { border-style: solid; }
+.slot.correct { outline: 3px solid #2e9e4d; }
+.slot.incorrect { outline: 3px solid #d1414a; }
+
+.codon-col { display: flex; flex-direction: column; align-items: center; gap: 0.2rem; }
+.codon-label { font-size: 0.7rem; color: #666; font-family: monospace; }
+.amino-slot { background: #d9c9ff; cursor: default; }
+
+.builder-controls {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 0.75rem;
+}
+
+.result-ok { color: #2e9e4d; font-weight: 600; }
+.result-bad { color: #d1414a; font-weight: 600; }
+
+.diff-view { font-family: monospace; margin: 0.75rem 0; }
+.diff-row { display: flex; align-items: center; gap: 0.15rem; margin-bottom: 0.3rem; }
+.diff-label { width: 6.5rem; font-family: system-ui, sans-serif; font-size: 0.8rem; color: #666; flex-shrink: 0; }
+.diff-nt {
+  width: 1.4rem;
+  height: 1.6rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 3px;
+}
+.diff-highlight { background: #ffe08a; outline: 2px solid #d1971a; }
+
+.detail-table { border-collapse: collapse; margin: 0.75rem 0; }
+.detail-table td, .detail-table th { border: 1px solid #ddd; padding: 0.4rem 0.7rem; text-align: left; }
+
+.classification { background: #eef7ee; padding: 0.6rem 0.9rem; border-radius: 8px; }
+
+.celebrate { margin-top: 1rem; padding: 1rem; background: #eef7ee; border-radius: 10px; }
+
+.quiz-row { display: flex; align-items: center; gap: 0.6rem; margin-bottom: 0.5rem; }
+.toggle { padding: 0.3rem 0.8rem; border-radius: 6px; border: 1px solid #ccc; cursor: pointer; background: #fafafa; }
+.toggle.selected { background: #4b3fd6; color: white; border-color: #4b3fd6; }
+
+.empty-hint { color: #999; font-style: italic; }
+.hint { color: #555; }
+
+.rules-panel {
+  margin: 0.75rem 0;
+  padding: 0.6rem 0.9rem;
+  background: #fff8e6;
+  border: 1px solid #f0dca0;
+  border-radius: 8px;
+}
+.rules-panel-label { font-weight: 700; font-size: 0.85rem; margin-bottom: 0.3rem; color: #8a6d1c; }
+.rules-panel ul { margin: 0; padding-left: 1.2rem; }
+.rules-panel li { font-size: 0.85rem; margin-bottom: 0.2rem; color: #4a3c0d; }
+
+.codon-table-panel { margin: 1rem 0; }
+.collapse-toggle {
+  background: none;
+  border: none;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 0.3rem 0;
+  color: #4b3fd6;
+}
+.codon-table-grid {
+  border-collapse: collapse;
+  font-family: monospace;
+  font-size: 0.7rem;
+  margin-top: 0.4rem;
+}
+.codon-table-grid td {
+  border: 1px solid #e0e0e6;
+  padding: 0.15rem 0.35rem;
+  text-align: center;
+}
+.codon-table-grid td.codon-stop { background: #ffe4e4; }
+.codon-cell-codon { display: block; color: #333; }
+.codon-cell-aa { display: block; font-weight: 700; color: #4b3fd6; }
+
+.reference-strip {
+  margin: 0.75rem 0 1rem;
+  padding: 0.6rem 0.75rem;
+  background: #f6f5ff;
+  border: 1px solid #ddd8ff;
+  border-radius: 8px;
+}
+.reference-strip-label { font-size: 0.8rem; font-weight: 600; color: #4b3fd6; margin-bottom: 0.4rem; }
+.reference-strip-codons { display: flex; flex-wrap: wrap; gap: 0.35rem; font-family: monospace; }
+.reference-codon {
+  display: inline-flex;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  overflow: hidden;
+}
+.reference-nt { padding: 0.15rem 0.3rem; background: white; }
+.reference-nt:not(:last-child) { border-right: 1px dashed #ddd; }
+.reference-strip-aa-label { margin-top: 0.6rem; }
+.reference-aa {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.6rem;
+  padding: 0.15rem 0;
+  background: #d9c9ff;
+  border-radius: 3px;
+  font-weight: 700;
+}
+.reference-aa-stop { background: #ffc9c9; }
+
+.gap-row { display: flex; align-items: center; flex-wrap: wrap; font-family: monospace; margin: 0.75rem 0; }
+.gap-unit { display: flex; align-items: center; }
+.gap-btn {
+  border: none;
+  background: #eee;
+  border-radius: 50%;
+  width: 1.6rem;
+  height: 1.6rem;
+  cursor: pointer;
+  color: #888;
+}
+.gap-btn:hover { background: #ddd6ff; color: #4b3fd6; }
+.gap-btn.gap-correct { background: #2e9e4d; color: white; }
+.gap-codon { padding: 0.2rem 0.35rem; background: white; border: 1px solid #ccc; border-radius: 4px; margin: 0 0.15rem; }
+
+.password-gate {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: system-ui, sans-serif;
+  background: #f7f7f9;
+}
+.password-gate-form {
+  background: white;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  max-width: 360px;
+  text-align: center;
+}
+.password-gate-form h1 { margin-top: 0; font-size: 1.4rem; }
+.password-gate-form input {
+  width: 100%;
+  padding: 0.6rem;
+  margin: 1rem 0 0.75rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 1rem;
+  box-sizing: border-box;
+}
+.password-gate-form button {
+  width: 100%;
+  padding: 0.6rem;
+  background: #4b3fd6;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  cursor: pointer;
+}

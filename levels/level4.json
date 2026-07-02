@@ -1,0 +1,53 @@
+{
+  "level": 4,
+  "title": "The Extra Letters (Insertion / Frameshift)",
+  "learning_goal": "Learn that inserting (or deleting) nucleotides that are NOT a multiple of 3 shifts the reading frame for every codon downstream of the change. This is a frameshift mutation - it can scramble the rest of the protein and even create a premature STOP codon, unlike the single-letter swaps in levels 2 and 3.",
+  "gene_used": "flaA",
+  "rules": [
+    "The reference DNA sequence and reference protein are shown on screen the whole time.",
+    "Your tile pile has exactly 5 more tiles than the reference — a 5-nucleotide insertion.",
+    "You must find the insertion point yourself: guess a gap, and the game only tells you 'earlier' or 'later', never the exact spot.",
+    "Once located, the reading frame is re-counted in groups of 3 from position 1 — it does NOT restart at the insertion.",
+    "A frameshift can create an early STOP codon, cutting the protein short before the reference protein's own stop."
+  ],
+  "materials_provided": [
+    "The codon table",
+    "The reference flaA nucleotide sequence (48 nt, ending in its STOP codon), shown on screen the whole time",
+    "A set of 53 nucleotide squares - the normal 48 reference tiles PLUS 5 extra nucleotide tiles mixed into the shuffled pile",
+    "A row of candidate insertion points (gaps between reference codons) for the player to test, rather than the exact location being revealed outright"
+  ],
+  "instructions": [
+    "1. Compare your pile of 53 squares to the 48-nucleotide reference shown above - there are 5 extra tiles that don't belong to the reference gene.",
+    "2. Pick a candidate gap between two reference codons where you think the extra tiles were inserted, from the row of gap markers.",
+    "3. The game tells you if your guess is too early or too late in the sequence (like a number-guessing game), narrowing down the true insertion point without revealing it outright.",
+    "4. Once you land on the right gap, arrange the 5 extra tiles themselves into their correct order to complete the 53-nucleotide mutant sequence.",
+    "5. Re-split the WHOLE mutant sequence into new codons of 3, starting from position 1 again (the reading frame doesn't reset at the insertion - it just keeps reading in groups of 3 from the start).",
+    "6. Translate the new codons using the codon table. Notice that codons 1-5 still translate the same (M-L-Q-A-D), but from codon 6 onward every codon - and every amino acid - is different from the reference, because the frame has shifted.",
+    "7. Notice the new sequence hits a STOP codon (TAA) much earlier than the reference protein would have - the protein gets cut short (truncated). The game explains: 'This is a frameshift mutation - because 5 is not a multiple of 3, everything after the insertion is read in the wrong groups of 3, scrambling the protein and often stopping it early.'"
+  ],
+  "reference": {
+    "nucleotide_sequence": "ATGCTTCAAGCAGATATCAACCGTTTAATGGAAGAACTTGACAATTAA",
+    "amino_acid_sequence": "MLQADINRLMEELDN*",
+    "codons": ["ATG","CTT","CAA","GCA","GAT","ATC","AAC","CGT","TTA","ATG","GAA","GAA","CTT","GAC","AAT","TAA"]
+  },
+  "mutant": {
+    "nucleotide_sequence": "ATGCTTCAAGCAGATCGTACATCAACCGTTTAATGGAAGAACTTGACAATTAA",
+    "insertion_details": {
+      "inserted_bases": "CGTAC",
+      "insertion_length": 5,
+      "insertion_position_0based_nt": 15,
+      "insertion_position_1based_in_fragment": "after nucleotide 15 (i.e. right after codon 5)",
+      "why_multiple_of_3_matters": "Insertions/deletions of 3 (or a multiple of 3) nucleotides just add or remove whole codons (whole amino acids) and keep the reading frame intact. An indel of any other length, like 5 here, shifts every downstream codon boundary - a frameshift."
+    },
+    "new_codons_from_position_1": ["ATG","CTT","CAA","GCA","GAT","CGT","ACA","TCA","ACC","GTT","TAA","TGG","AAG","AAC","TTG","ACA","ATT","AA"],
+    "new_amino_acid_sequence_until_stop": "MLQADRTSTV*",
+    "classification": "Frameshift (insertion) mutation - codons 1-5 (MLQAD) are unaffected, but codon 6 onward is completely different from the reference, and translation stops early at a premature STOP codon (codon 11), well before the reference protein's own STOP at codon 16."
+  },
+  "scoring": {
+    "points_per_correct_placement": 1,
+    "points_for_locating_the_gap_in_few_guesses": 15,
+    "points_for_correctly_ordering_the_5_extra_tiles": 10,
+    "points_for_correctly_re_translating_the_shifted_frame": 15,
+    "points_for_identifying_the_premature_stop": 10
+  }
+}

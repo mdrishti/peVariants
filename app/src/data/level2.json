@@ -1,0 +1,50 @@
+{
+  "level": 2,
+  "title": "Spot the Silent Change (Synonymous SNP)",
+  "learning_goal": "Learn that a Single Nucleotide Polymorphism (SNP) can change a codon's letters without changing the amino acid it codes for, because the genetic code is redundant (several codons can encode the same amino acid). This is called a synonymous (silent) mutation.",
+  "gene_used": "cadF",
+  "rules": [
+    "The reference DNA sequence and reference protein are shown on screen the whole time — your sample may or may not match them.",
+    "Build the sample tiles first, then assign amino acids, before you're shown the comparison.",
+    "There is exactly ONE nucleotide difference between your sample and the reference.",
+    "A single nucleotide change does not always change the amino acid — check the protein comparison, not just the DNA, before deciding."
+  ],
+  "materials_provided": [
+    "The codon table",
+    "The reference (known/healthy) nucleotide sequence AND its reference amino acid sequence, both shown on screen the whole time",
+    "A restricted set of 48 nucleotide squares - one full tile set, but built from an unlabeled SAMPLE sequence that may or may not match the reference exactly",
+    "16 amino acid squares (including one '*' STOP tile) to assign to the sample sequence's codons"
+  ],
+  "instructions": [
+    "1. Arrange the 48 nucleotide squares in order to build the sample sequence you were given (its identity - mutant or identical to reference - is not revealed yet).",
+    "2. Split into 16 codons (the last one is a STOP codon) and assign the matching amino acid tile under each codon using the codon table.",
+    "3. Compare your arranged sample sequence, position by position, against the reference cadF sequence shown at the top of the screen. Find the ONE nucleotide position that differs.",
+    "4. Compare your assigned amino acid sequence against the reference amino acid sequence (also shown at the top). Are they the same or different at the position of the SNP?",
+    "5. If the amino acid is unchanged, the game confirms: 'Synonymous mutation - the protein is unaffected!' and explains why using the codon table (show both codons map to the same letter)."
+  ],
+  "reference": {
+    "nucleotide_sequence": "ATGGATAATCGTTATGCACCAGGTGTTAGACTTGGTTATCATTTTTGA",
+    "amino_acid_sequence": "MDNRYAPGVRLGYHF*",
+    "codons": ["ATG","GAT","AAT","CGT","TAT","GCA","CCA","GGT","GTT","AGA","CTT","GGT","TAT","CAT","TTT","TGA"]
+  },
+  "mutant": {
+    "nucleotide_sequence": "ATGGATAATCGTTATGCACCAGGTGTCAGACTTGGTTATCATTTTTGA",
+    "amino_acid_sequence": "MDNRYAPGVRLGYHF*",
+    "codons": ["ATG","GAT","AAT","CGT","TAT","GCA","CCA","GGT","GTC","AGA","CTT","GGT","TAT","CAT","TTT","TGA"],
+    "mutation_details": {
+      "nucleotide_position_1based_in_fragment": 27,
+      "codon_number_1based": 9,
+      "reference_codon": "GTT",
+      "mutant_codon": "GTC",
+      "reference_amino_acid": "V (Valine)",
+      "mutant_amino_acid": "V (Valine)",
+      "change": "T -> C at the 3rd (wobble) position of codon 9",
+      "classification": "Synonymous (silent) SNP - both GTT and GTC code for Valine, so the protein sequence does not change."
+    }
+  },
+  "scoring": {
+    "points_per_correct_placement": 1,
+    "points_for_correctly_locating_the_snp": 10,
+    "points_for_correctly_classifying_as_synonymous": 15
+  }
+}

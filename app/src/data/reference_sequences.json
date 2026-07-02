@@ -1,0 +1,39 @@
+{
+  "organism": "Campylobacter jejuni (pathogenic species, common cause of bacterial food poisoning)",
+  "note": "Each gene below starts with a real 45-nucleotide (15-codon) in-frame fragment taken from an actual GenBank C. jejuni gene entry (starting at an ATG, no internal stop codons). A 3-nucleotide STOP codon (TAA/TGA/TAG) has been appended by us to the end of each fragment so players see a complete, stop-terminated mini-gene in the game - the real genes continue much further before their true stop codon, so this appended stop is a teaching simplification, not the authentic downstream sequence. Positions are 0-based offsets into the original GenBank record sequence for the 45 nt of real sequence.",
+  "genes": {
+    "flaA": {
+      "gene_name": "flaA",
+      "protein_function": "Flagellin - main building block of the flagellum, the 'motor/propeller' that lets the bacterium swim and helps it invade human gut cells.",
+      "source_accession": "PZ191615.1",
+      "source_description": "Campylobacter jejuni strain O.32 flagellin (flaA) gene, partial cds",
+      "fragment_start_pos_0based": 48,
+      "stop_codon_appended": true,
+      "nucleotide_sequence": "ATGCTTCAAGCAGATATCAACCGTTTAATGGAAGAACTTGACAATTAA",
+      "amino_acid_sequence": "MLQADINRLMEELDN*",
+      "codons": ["ATG","CTT","CAA","GCA","GAT","ATC","AAC","CGT","TTA","ATG","GAA","GAA","CTT","GAC","AAT","TAA"]
+    },
+    "cadF": {
+      "gene_name": "cadF",
+      "protein_function": "Adhesin to fibronectin - a protein on the bacterial surface that grabs onto human gut-cell fibers, letting the bacterium stick to and invade the gut lining.",
+      "source_accession": "OR876352.1",
+      "source_description": "Campylobacter jejuni strain 376B adhesin to fibronectin (cadF) gene, partial cds",
+      "fragment_start_pos_0based": 18,
+      "stop_codon_appended": true,
+      "nucleotide_sequence": "ATGGATAATCGTTATGCACCAGGTGTTAGACTTGGTTATCATTTTTGA",
+      "amino_acid_sequence": "MDNRYAPGVRLGYHF*",
+      "codons": ["ATG","GAT","AAT","CGT","TAT","GCA","CCA","GGT","GTT","AGA","CTT","GGT","TAT","CAT","TTT","TGA"]
+    },
+    "ciaB": {
+      "gene_name": "ciaB",
+      "protein_function": "Invasion antigen B - a protein the bacterium injects into human gut cells to help it invade and cause disease.",
+      "source_accession": "AF114831.1",
+      "source_description": "Campylobacter jejuni invasion antigen B (ciaB) gene, complete cds",
+      "fragment_start_pos_0based": 64,
+      "stop_codon_appended": true,
+      "nucleotide_sequence": "ATGAATAATTTTAAAGAAATAGCTAAATTGGTTAGAAAATACAAATAG",
+      "amino_acid_sequence": "MNNFKEIAKLVRKYK*",
+      "codons": ["ATG","AAT","AAT","TTT","AAA","GAA","ATA","GCT","AAA","TTG","GTT","AGA","AAA","TAC","AAA","TAG"]
+    }
+  }
+}

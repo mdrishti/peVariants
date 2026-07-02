@@ -1,0 +1,52 @@
+{
+  "level": 3,
+  "title": "Spot the Meaningful Change (Non-synonymous SNP)",
+  "learning_goal": "Learn that a SNP can change a codon in a way that DOES change the resulting amino acid. This is called a non-synonymous (missense) mutation, and it can alter how the protein works.",
+  "gene_used": "cadF",
+  "rules": [
+    "The reference DNA sequence and reference protein are shown on screen the whole time — your sample may or may not match them.",
+    "Build the sample tiles first, then assign amino acids, before you're shown the comparison.",
+    "There is exactly ONE nucleotide difference between your sample and the reference.",
+    "This time, check whether that single nucleotide change actually changes the amino acid too."
+  ],
+  "materials_provided": [
+    "The codon table",
+    "The reference (known/healthy) nucleotide sequence AND its reference amino acid sequence, both shown on screen the whole time",
+    "A restricted set of 48 nucleotide squares built from an unlabeled SAMPLE sequence",
+    "16 amino acid squares (including one '*' STOP tile) matching the sample sequence's codons"
+  ],
+  "instructions": [
+    "1. Arrange the 48 nucleotide squares in order, same as level 1 and 2.",
+    "2. Split into 16 codons (the last is STOP) and assign the matching amino acid tile under each codon using the codon table.",
+    "3. Compare your arranged sequence against the reference cadF sequence shown at the top. Find the ONE nucleotide position that differs (same codon position as level 2, so players can directly compare outcomes).",
+    "4. Compare your assigned amino acid sequence against the reference amino acid sequence, also shown at the top. This time they are DIFFERENT at the SNP position.",
+    "5. The game confirms: 'Non-synonymous (missense) mutation - the protein has changed!' and explains that cadF helps the bacterium stick to human gut cells, so a changed amino acid here could affect adhesion, hinting at how such changes matter for real pathogens."
+  ],
+  "reference": {
+    "nucleotide_sequence": "ATGGATAATCGTTATGCACCAGGTGTTAGACTTGGTTATCATTTTTGA",
+    "amino_acid_sequence": "MDNRYAPGVRLGYHF*",
+    "codons": ["ATG","GAT","AAT","CGT","TAT","GCA","CCA","GGT","GTT","AGA","CTT","GGT","TAT","CAT","TTT","TGA"]
+  },
+  "mutant": {
+    "nucleotide_sequence": "ATGGATAATCGTTATGCACCAGGTATTAGACTTGGTTATCATTTTTGA",
+    "amino_acid_sequence": "MDNRYAPGIRLGYHF*",
+    "codons": ["ATG","GAT","AAT","CGT","TAT","GCA","CCA","GGT","ATT","AGA","CTT","GGT","TAT","CAT","TTT","TGA"],
+    "mutation_details": {
+      "nucleotide_position_1based_in_fragment": 25,
+      "codon_number_1based": 9,
+      "reference_codon": "GTT",
+      "mutant_codon": "ATT",
+      "reference_amino_acid": "V (Valine)",
+      "mutant_amino_acid": "I (Isoleucine)",
+      "change": "G -> A at the 1st position of codon 9",
+      "classification": "Non-synonymous (missense) SNP - GTT (Valine) becomes ATT (Isoleucine), so the protein sequence changes at position 9."
+    }
+  },
+  "compare_with_level_2": "Same codon (#9) as level 2, but the changed nucleotide position within the codon is different (1st position here vs 3rd/wobble position in level 2). This lets players directly see why WHERE a SNP lands in a codon matters as much as whether it occurs at all.",
+  "scoring": {
+    "points_per_correct_placement": 1,
+    "points_for_correctly_locating_the_snp": 10,
+    "points_for_correctly_classifying_as_non_synonymous": 15,
+    "bonus_for_explaining_potential_biological_impact": 10
+  }
+}

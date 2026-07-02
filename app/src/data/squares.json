@@ -1,0 +1,89 @@
+{
+  "nucleotide_squares_per_gene": {
+    "flaA": {
+      "total_squares": 48,
+      "tile_counts": {
+        "A": 19,
+        "T": 13,
+        "G": 8,
+        "C": 8
+      },
+      "note": "Shuffle these 48 single-nucleotide tiles (A/T/G/C) and arrange them in the correct order to rebuild the gene sequence, including its final STOP codon."
+    },
+    "cadF": {
+      "total_squares": 48,
+      "tile_counts": {
+        "A": 12,
+        "T": 19,
+        "G": 11,
+        "C": 6
+      },
+      "note": "Shuffle these 48 single-nucleotide tiles (A/T/G/C) and arrange them in the correct order to rebuild the gene sequence, including its final STOP codon."
+    },
+    "ciaB": {
+      "total_squares": 48,
+      "tile_counts": {
+        "A": 25,
+        "T": 14,
+        "G": 7,
+        "C": 2
+      },
+      "note": "Shuffle these 48 single-nucleotide tiles (A/T/G/C) and arrange them in the correct order to rebuild the gene sequence, including its final STOP codon."
+    }
+  },
+  "amino_acid_squares_per_gene": {
+    "flaA": {
+      "total_squares": 16,
+      "tile_counts": {
+        "M": 2,
+        "L": 3,
+        "Q": 1,
+        "A": 1,
+        "D": 2,
+        "I": 1,
+        "N": 2,
+        "R": 1,
+        "E": 2,
+        "*": 1
+      },
+      "note": "Shuffle these 16 single-letter amino acid tiles (including one '*' STOP tile) and place one under each correctly-arranged codon."
+    },
+    "cadF": {
+      "total_squares": 16,
+      "tile_counts": {
+        "M": 1,
+        "D": 1,
+        "N": 1,
+        "R": 2,
+        "Y": 2,
+        "A": 1,
+        "P": 1,
+        "G": 2,
+        "V": 1,
+        "L": 1,
+        "H": 1,
+        "F": 1,
+        "*": 1
+      },
+      "note": "Shuffle these 16 single-letter amino acid tiles (including one '*' STOP tile) and place one under each correctly-arranged codon."
+    },
+    "ciaB": {
+      "total_squares": 16,
+      "tile_counts": {
+        "M": 1,
+        "N": 2,
+        "F": 1,
+        "K": 4,
+        "E": 1,
+        "I": 1,
+        "A": 1,
+        "L": 1,
+        "V": 1,
+        "R": 1,
+        "Y": 1,
+        "*": 1
+      },
+      "note": "Shuffle these 16 single-letter amino acid tiles (including one '*' STOP tile) and place one under each correctly-arranged codon."
+    }
+  }
+}
