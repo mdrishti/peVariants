@@ -3,7 +3,7 @@ import codonData from '../data/codon_table.json';
 
 const table = codonData.codon_table;
 const names = codonData.amino_acid_names;
-const BASES = ['T', 'C', 'A', 'G'];
+const BASES = ['A', 'C', 'G', 'T']; // alphabetical, so the table reads in a strict A-C-G-T order rather than grouped by amino acid
 
 export default function CodonTable() {
   const [open, setOpen] = useState(true);

@@ -5,6 +5,8 @@ import Level2 from './levels/Level2';
 import Level3 from './levels/Level3';
 import Level4 from './levels/Level4';
 import Level5 from './levels/Level5';
+import PlayerBar from './components/PlayerBar';
+import { PlayerProvider } from './state/PlayerContext';
 
 const LEVELS = [
   { id: 1, title: 'Build the Gene', Component: Level1 },
@@ -19,28 +21,32 @@ function App() {
   const active = LEVELS.find((l) => l.id === levelId);
 
   return (
-    <div className="app-shell">
-      <header>
-        <h1>🧬 Variant Explainer Game</h1>
-        <p className="subtitle">Learn how DNA changes affect proteins — using real Campylobacter jejuni genes</p>
-      </header>
+    <PlayerProvider>
+      <div className="app-shell">
+        <header>
+          <h1>🧬 Variant Explainer Game</h1>
+          <p className="subtitle">Learn how DNA changes affect proteins — using real Campylobacter jejuni genes</p>
+        </header>
 
-      <nav className="level-nav">
-        {LEVELS.map((l) => (
-          <button
-            key={l.id}
-            className={'level-btn' + (levelId === l.id ? ' active' : '')}
-            onClick={() => setLevelId(l.id)}
-          >
-            {l.id}. {l.title}
-          </button>
-        ))}
-      </nav>
+        <PlayerBar />
 
-      <main key={levelId}>
-        {active ? <active.Component /> : <p className="pick-hint">Pick a level above to start.</p>}
-      </main>
-    </div>
+        <nav className="level-nav">
+          {LEVELS.map((l) => (
+            <button
+              key={l.id}
+              className={'level-btn' + (levelId === l.id ? ' active' : '')}
+              onClick={() => setLevelId(l.id)}
+            >
+              {l.id}. {l.title}
+            </button>
+          ))}
+        </nav>
+
+        <main key={levelId}>
+          {active ? <active.Component /> : <p className="pick-hint">Pick a level above to start.</p>}
+        </main>
+      </div>
+    </PlayerProvider>
   );
 }
 

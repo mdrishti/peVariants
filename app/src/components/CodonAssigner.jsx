@@ -8,30 +8,26 @@ export default function CodonAssigner({ sequence, aminoLetters, onComplete }) {
   const codons = useMemo(() => codonsOf(sequence), [sequence]);
   const initialTiles = useMemo(() => shuffle(makeTiles(aminoLetters)), [aminoLetters]);
   const [bank, setBank] = useState(initialTiles);
-  const [selected, setSelected] = useState(null); // tile picked from bank
   const [assigned, setAssigned] = useState(Array(codons.length).fill(null));
   const [checked, setChecked] = useState(false);
 
-  function pick(tile) {
-    setSelected(tile);
+  function placeInFirstEmpty(tile) {
+    const idx = assigned.findIndex((a) => a === null);
+    if (idx === -1) return;
+    const next = [...assigned];
+    next[idx] = tile;
+    setAssigned(next);
+    setBank(bank.filter((t) => t.id !== tile.id));
+    setChecked(false);
   }
 
-  function assign(idx) {
-    if (assigned[idx]) {
-      // unassign, return to bank
-      setBank([...bank, assigned[idx]]);
-      const next = [...assigned];
-      next[idx] = null;
-      setAssigned(next);
-      setChecked(false);
-      return;
-    }
-    if (!selected) return;
+  function unassign(idx) {
+    const tile = assigned[idx];
+    if (!tile) return;
     const next = [...assigned];
-    next[idx] = selected;
+    next[idx] = null;
     setAssigned(next);
-    setBank(bank.filter((t) => t.id !== selected.id));
-    setSelected(null);
+    setBank([...bank, tile]);
     setChecked(false);
   }
 
@@ -46,13 +42,13 @@ export default function CodonAssigner({ sequence, aminoLetters, onComplete }) {
 
   return (
     <div className="codon-assigner">
-      <p className="hint">Click an amino acid tile, then click the codon box you want to assign it to.</p>
+      <p className="hint">Click an amino acid tile — it fills the next empty codon box automatically. Click a filled box to send it back.</p>
       <div className="tile-bank">
         {bank.map((tile) => (
           <button
             key={tile.id}
-            className={'tile amino' + (tile.letter === '*' ? ' stop' : '') + (selected?.id === tile.id ? ' selected' : '')}
-            onClick={() => pick(tile)}
+            className={'tile amino' + (tile.letter === '*' ? ' stop' : '')}
+            onClick={() => placeInFirstEmpty(tile)}
           >
             {tile.letter === '*' ? 'STOP' : tile.letter}
           </button>
@@ -73,7 +69,7 @@ export default function CodonAssigner({ sequence, aminoLetters, onComplete }) {
                   (a?.letter === '*' ? ' stop' : '') +
                   (checked && a ? (a.letter === correctAA ? ' correct' : ' incorrect') : '')
                 }
-                onClick={() => assign(i)}
+                onClick={() => unassign(i)}
               >
                 {a ? (a.letter === '*' ? 'STOP' : a.letter) : ''}
               </button>

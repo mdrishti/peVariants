@@ -4,12 +4,38 @@ import CodonAssigner from '../components/CodonAssigner';
 import CodonTable from '../components/CodonTable';
 import ReferenceStrip from '../components/ReferenceStrip';
 import RulesPanel from '../components/RulesPanel';
+import PointsBanner from '../components/PointsBanner';
+import { usePlayer } from '../state/PlayerContext';
+
+const POINTS = { build: 20, snp: 20, classify: 30 };
 
 /** Shared UI for Level 2 (synonymous) and Level 3 (non-synonymous) SNP levels. */
-export default function MutationLevel({ data, title }) {
+export default function MutationLevel({ data, title, levelKey }) {
+  const { player, awardPoints } = usePlayer();
   const [stage, setStage] = useState('nucleotides');
   const [builtAminoAcids, setBuiltAminoAcids] = useState('');
-  const { reference, mutant, gene_used } = data;
+  const [banner, setBanner] = useState(null);
+
+  if (!player) {
+    return (
+      <div className="level">
+        <h2>{title}</h2>
+        <p className="hint">Register a player name above to start earning points.</p>
+      </div>
+    );
+  }
+
+  if (!player.geneChoice) {
+    return (
+      <div className="level">
+        <h2>{title}</h2>
+        <p className="hint">Pick a gene in Level 1 first — this level continues with that same gene.</p>
+      </div>
+    );
+  }
+
+  const geneKey = player.geneChoice;
+  const { reference, mutant } = data.genes[geneKey];
 
   const diffIndex = useMemo(() => {
     for (let i = 0; i < reference.nucleotide_sequence.length; i++) {
@@ -20,11 +46,16 @@ export default function MutationLevel({ data, title }) {
 
   const aaDiffIndex = Math.floor(diffIndex / 3);
 
+  function award(key) {
+    const total = awardPoints(levelKey, POINTS[key]);
+    setBanner({ points: POINTS[key], total });
+  }
+
   return (
     <div className="level">
       <h2>{title}</h2>
       <p>
-        You've been handed an unlabeled DNA sample based on <strong>{gene_used}</strong> — the game won't
+        You've been handed an unlabeled DNA sample based on <strong>{geneKey}</strong> — the game won't
         tell you up front whether it matches the reference exactly or carries a mutation. Build it, assign
         amino acids, then compare both against the reference shown above to find out.
       </p>
@@ -32,9 +63,9 @@ export default function MutationLevel({ data, title }) {
       <RulesPanel rules={data.rules} />
       <CodonTable />
       <ReferenceStrip
-        label={`Reference sequence — ${gene_used} (known/healthy)`}
+        label={`Reference sequence — ${geneKey} (known/healthy)`}
         sequence={reference.nucleotide_sequence}
-        aminoAcidSequence={reference.amino_acid_sequence}
+        aminoAcidSequence={stage === 'compare' || stage === 'done' ? reference.amino_acid_sequence : undefined}
       />
 
       {stage === 'nucleotides' && (
@@ -44,7 +75,10 @@ export default function MutationLevel({ data, title }) {
             letters={mutant.nucleotide_sequence}
             target={mutant.nucleotide_sequence}
             onComplete={(seq, ok) => {
-              if (ok) setStage('aminoacids');
+              if (ok) {
+                award('build');
+                setStage('aminoacids');
+              }
             }}
           />
         </>
@@ -56,7 +90,10 @@ export default function MutationLevel({ data, title }) {
           aminoLetters={mutant.amino_acid_sequence}
           onComplete={(built, ok) => {
             setBuiltAminoAcids(built);
-            if (ok) setStage('compare');
+            if (ok) {
+              award('snp');
+              setStage('compare');
+            }
           }}
         />
       )}
@@ -73,7 +110,7 @@ export default function MutationLevel({ data, title }) {
             aaDiffIndex={aaDiffIndex}
           />
           {stage === 'compare' && (
-            <button onClick={() => setStage('done')}>Reveal the mutation type</button>
+            <button onClick={() => { award('classify'); setStage('done'); }}>Reveal the mutation type</button>
           )}
           {stage === 'done' && (
             <div className="mutation-reveal">
@@ -90,6 +127,8 @@ export default function MutationLevel({ data, title }) {
           )}
         </div>
       )}
+
+      <PointsBanner points={banner?.points} total={banner?.total} />
     </div>
   );
 }
