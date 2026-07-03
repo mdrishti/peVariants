@@ -5,7 +5,7 @@
   "rules": [
     "The reference nucleotide sequence and the full codon table are shown on screen the whole time — use them.",
     "Place all nucleotide tiles in order first, then assign an amino acid tile to each codon.",
-    "You must build all 3 genes (flaA, cadF, ciaB) to finish the level.",
+    "You must build all 3 genes (jlpA, cadF, ciaB) to finish the level.",
     "The last codon of each gene is a STOP codon — every gene must end there."
   ],
   "materials_provided": [
@@ -18,7 +18,7 @@
     "2. Once 48 nucleotides are placed, group every 3 tiles into a codon (the game should auto-highlight groups of 3).",
     "3. Look up each codon in the codon table, then place the matching amino acid square underneath it.",
     "4. Repeat until all 16 codons have a matching amino acid tile below them (the 16th is STOP). This completes the protein's amino acid sequence.",
-    "5. Do this for each of the 3 genes (flaA, cadF, ciaB) to finish level 1."
+    "5. Do this for each of the 3 genes (jlpA, cadF, ciaB) to finish level 1."
   ],
   "scoring": {
     "points_per_correct_nucleotide_placement": 1,
@@ -26,7 +26,7 @@
     "bonus_for_no_mistakes": 20
   },
   "solutions": {
-    "flaA": { "nucleotide_sequence": "ATGCTTCAAGCAGATATCAACCGTTTAATGGAAGAACTTGACAATTAA", "amino_acid_sequence": "MLQADINRLMEELDN*" },
+    "jlpA": { "nucleotide_sequence": "ATGAAAAAAGGTATTTTTCTCTCTATTGGAATAGCTGTTTTGTTTTAA", "amino_acid_sequence": "MKKGIFLSIGIAVLF*" },
     "cadF": { "nucleotide_sequence": "ATGGATAATCGTTATGCACCAGGTGTTAGACTTGGTTATCATTTTTGA", "amino_acid_sequence": "MDNRYAPGVRLGYHF*" },
     "ciaB": { "nucleotide_sequence": "ATGAATAATTTTAAAGAAATAGCTAAATTGGTTAGAAAATACAAATAG", "amino_acid_sequence": "MNNFKEIAKLVRKYK*" }
   }

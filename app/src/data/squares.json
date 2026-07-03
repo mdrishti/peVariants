@@ -1,12 +1,12 @@
 {
   "nucleotide_squares_per_gene": {
-    "flaA": {
+    "jlpA": {
       "total_squares": 48,
       "tile_counts": {
-        "A": 19,
-        "T": 13,
+        "A": 14,
+        "T": 22,
         "G": 8,
-        "C": 8
+        "C": 4
       },
       "note": "Shuffle these 48 single-nucleotide tiles (A/T/G/C) and arrange them in the correct order to rebuild the gene sequence, including its final STOP codon."
     },
@@ -32,18 +32,18 @@
     }
   },
   "amino_acid_squares_per_gene": {
-    "flaA": {
+    "jlpA": {
       "total_squares": 16,
       "tile_counts": {
-        "M": 2,
-        "L": 3,
-        "Q": 1,
+        "M": 1,
+        "K": 2,
+        "G": 2,
+        "I": 3,
+        "F": 2,
+        "L": 2,
+        "S": 1,
         "A": 1,
-        "D": 2,
-        "I": 1,
-        "N": 2,
-        "R": 1,
-        "E": 2,
+        "V": 1,
         "*": 1
       },
       "note": "Shuffle these 16 single-letter amino acid tiles (including one '*' STOP tile) and place one under each correctly-arranged codon."

@@ -1,6 +1,6 @@
 import refs from '../data/reference_sequences.json';
 
-const GENES = ['flaA', 'cadF', 'ciaB'];
+const GENES = ['jlpA', 'cadF', 'ciaB'];
 
 /** Lets the player pick a gene once (Level 1); after that it's locked and carried into later levels. */
 export default function GenePicker({ value, onChange, locked }) {

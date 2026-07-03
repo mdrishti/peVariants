@@ -4,9 +4,9 @@
   "learning_goal": "Learn that bacteria can chemically 'tag' specific short DNA motifs with a methyl group (methylation), without changing the underlying nucleotide letter, and that whether that tag gets applied can depend on the cell's environment.",
   "simplification_note": "Real bacterial methylation and gene regulation involves many interacting factors (promoter strength, transcription factors, methylation of both DNA strands, timing, etc). This level uses one well-documented type of bacterial methylation motif (recognized by Dcm-family methyltransferases, common across many bacteria and reported in some Campylobacter methylation systems) as a simplified, single-rule teaching model. The environment-dependence in Round 2 is also simplified for teaching purposes - real Campylobacter gene regulation (including phase variation and methylome changes across growth conditions) is more complex than a single on/off switch, but the core idea - that the SAME DNA sequence can be expressed differently depending on conditions - is real and important (this is 'epigenetics').",
   "rules": [
-    "This level has 2 rounds: Round 1 is a motif hunt across all 3 genes; Round 2 explores how environment can change the outcome.",
+    "This level has 2 rounds: Round 1 shows each gene's real sequence with a methylation blob marking any methylated base; Round 2 explores how environment can change the outcome.",
     "Methylation never changes a nucleotide letter \u2014 the DNA sequence and protein stay identical either way.",
-    "In Round 1, you must find the motif yourself by selecting nucleotides in your built sequence - the game won't point it out for you.",
+    "A blob (\ud83d\udd35) means that base is really methylated. No blob means no methylation - use the motif table to understand why.",
     "You must give an ON/OFF answer for all 3 genes in Round 1 to unlock Round 2.",
     "In Round 2, the SAME gene can flip ON/OFF depending on the environment toggle - read the explanation before answering the final question."
   ],
@@ -31,22 +31,21 @@
   "materials_provided": [
     "The codon table",
     "The motif table above",
-    "Nucleotide squares for all 3 genes (flaA, cadF, ciaB) to build, same as Level 1",
-    "A clickable version of your built sequence to select candidate motif matches yourself"
+    "Each gene's real sequence, already assembled, with a methylation blob (🔵) marking any base that's actually methylated"
   ],
   "instructions": [
     "Round 1:",
-    "1. Build a gene's sequence (same as Level 1).",
-    "2. Using the motif table, click through the built sequence to select the stretch of nucleotides you think matches a motif - or declare 'no motif here' if you don't find one.",
-    "3. Check your answer. The game reveals whether a motif is really there and explains the correct ON/OFF call.",
-    "4. Repeat for all 3 genes, then answer ON/OFF for each to unlock Round 2.",
+    "1. Look at the gene's sequence and the motif table. If a blob (🔵) sits on the sequence, that base is really methylated.",
+    "2. Decide: is this gene's expression ON or OFF? Use the motif table's rule to reason it out.",
+    "3. Check your answer. The game reveals the correct call and explains why.",
+    "4. Repeat for all 3 genes to unlock Round 2.",
     "Round 2:",
     "5. Toggle between 'inside the host gut' and 'outside the host' to see how the SAME gene's ON/OFF state can change depending on whether the methylation enzyme is active in that environment.",
     "6. Answer the final question about what happens to expression when the bacterium moves environments."
   ],
   "gene_analysis": {
-    "flaA": {
-      "nucleotide_sequence": "ATGCTTCAAGCAGATATCAACCGTTTAATGGAAGAACTTGACAATTAA",
+    "jlpA": {
+      "nucleotide_sequence": "ATGAAAAAAGGTATTTTTCTCTCTATTGGAATAGCTGTTTTGTTTTAA",
       "motif_position": null,
       "motif_found": null,
       "expression_state": "ON",
@@ -90,7 +89,7 @@
         "explanation": "Outside the host, the methyltransferase is inactive in this scenario. The CCWGG motif is still physically present in the DNA, but with nothing to methylate it, cadF stays unmethylated and expression is ON."
       }
     ],
-    "unaffected_genes_note": "flaA and ciaB have no methylation motif at all in either environment, so their expression stays ON no matter what you toggle - only a gene that actually carries the motif (cadF here) can be switched by this mechanism.",
+    "unaffected_genes_note": "jlpA and ciaB have no methylation motif at all in either environment, so their expression stays ON no matter what you toggle - only a gene that actually carries the motif (cadF here) can be switched by this mechanism.",
     "quiz_question": "The bacterium moves from inside the host gut to outside (e.g. into water). What happens to cadF expression, and why?",
     "quiz_options": [
       {
@@ -113,10 +112,8 @@
   },
   "discussion_prompt": "Ask players: unlike levels 2-4, methylation doesn't change any nucleotide LETTER at all - the sequence and the protein it would make are identical in every environment. So what actually changed between Round 1 and Round 2? (Answer: nothing in the DNA sequence changed - what changed was whether the methylation MACHINERY was active. This is 'epigenetics' - control layered on top of the DNA sequence, and it can respond to environment.)",
   "scoring": {
-    "points_per_correctly_built_gene": 10,
-    "points_per_correct_motif_hunt_guess": 20,
-    "points_per_correct_on_off_call": 15,
-    "points_for_round2_quiz": 25,
-    "bonus_for_explaining_epigenetics_concept": 20
+    "points_per_correct_on_off_call": 20,
+    "bonus_for_all_three_correct": 30,
+    "points_for_round2_quiz": 25
   }
 }

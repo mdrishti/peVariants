@@ -9,7 +9,7 @@
     "You must find the insertion point yourself: guess a gap, and the game only tells you 'earlier' or 'later', never the exact spot.",
     "Once located, the reading frame is re-counted in groups of 3 from position 1 - it does NOT restart at the insertion.",
     "A frameshift can create an early STOP codon, cutting the protein short before the reference protein's own stop.",
-    "Round 3 explains WHY the first codon is the true start, even when an internal ATG (Methionine) appears later in the same gene."
+    "Round 3 explains WHY the first codon is the true start - not because it's 'the first ATG', but because of what's upstream of it."
   ],
   "materials_provided": [
     "The codon table",
@@ -27,31 +27,31 @@
     "7. Watch for an early STOP codon - if one appears well before the reference protein's own stop, the protein gets cut short (truncated). The game explains: 'This is a frameshift mutation - because 5 is not a multiple of 3, everything after the insertion is read in the wrong groups of 3, scrambling the protein and often stopping it early.'"
   ],
   "genes": {
-    "flaA": {
+    "jlpA": {
       "reference": {
-        "nucleotide_sequence": "ATGCTTCAAGCAGATATCAACCGTTTAATGGAAGAACTTGACAATTAA",
-        "amino_acid_sequence": "MLQADINRLMEELDN*",
+        "nucleotide_sequence": "ATGAAAAAAGGTATTTTTCTCTCTATTGGAATAGCTGTTTTGTTTTAA",
+        "amino_acid_sequence": "MKKGIFLSIGIAVLF*",
         "codons": [
           "ATG",
-          "CTT",
-          "CAA",
-          "GCA",
-          "GAT",
-          "ATC",
-          "AAC",
-          "CGT",
-          "TTA",
-          "ATG",
-          "GAA",
-          "GAA",
-          "CTT",
-          "GAC",
-          "AAT",
+          "AAA",
+          "AAA",
+          "GGT",
+          "ATT",
+          "TTT",
+          "CTC",
+          "TCT",
+          "ATT",
+          "GGA",
+          "ATA",
+          "GCT",
+          "GTT",
+          "TTG",
+          "TTT",
           "TAA"
         ]
       },
       "mutant": {
-        "nucleotide_sequence": "ATGCTTCAAGCAGATCGTACATCAACCGTTTAATGGAAGAACTTGACAATTAA",
+        "nucleotide_sequence": "ATGAAAAAAGGTATTCGTACTTTCTCTCTATTGGAATAGCTGTTTTGTTTTAA",
         "insertion_details": {
           "inserted_bases": "CGTAC",
           "insertion_length": 5,
@@ -61,25 +61,25 @@
         },
         "new_codons_from_position_1": [
           "ATG",
-          "CTT",
-          "CAA",
-          "GCA",
-          "GAT",
-          "CGT",
-          "ACA",
-          "TCA",
-          "ACC",
-          "GTT",
-          "TAA",
-          "TGG",
-          "AAG",
-          "AAC",
-          "TTG",
-          "ACA",
+          "AAA",
+          "AAA",
+          "GGT",
           "ATT",
+          "CGT",
+          "ACT",
+          "TTC",
+          "TCT",
+          "CTA",
+          "TTG",
+          "GAA",
+          "TAG",
+          "CTG",
+          "TTT",
+          "TGT",
+          "TTT",
           "AA"
         ],
-        "new_amino_acid_sequence_until_stop": "MLQADRTSTV*",
+        "new_amino_acid_sequence_until_stop": "MKKGIRTFSLLE*",
         "classification": "Frameshift (insertion) mutation - codons 1-5 are unaffected, but codon 6 onward is completely different from the reference because the frame has shifted."
       }
     },
@@ -216,11 +216,14 @@
     "quiz_explanation": "Codon 1 is correct - not because it's 'the first ATG', but because that's where the upstream ribosome-binding context (Shine-Dalgarno region) positions the ribosome. Any internal ATG is read as an internal Methionine only, once translation is already underway."
   },
   "shine_dalgarno_by_gene": {
-    "flaA": {
-      "upstream_sequence": "AAGGCAACTCAAGCGGCTCAAGATGGACAAAGTTTAAAAACAAGAACC",
-      "source_note": "Real upstream sequence from GenBank PZ191615.1 (48 nt available in this partial-cds record, immediately before our codon 1).",
-      "sd_highlight": null,
-      "confidence_note": "No confident Shine-Dalgarno-like motif (purine-rich, similar to the AGGAGG consensus) stands out in the 48 nt of real upstream sequence available here. Real SD sequences are degenerate and not always textbook, or the true ribosome-binding region may sit further upstream than this GenBank fragment reaches - we don't have that extra sequence, so we're showing you exactly what's real and available rather than inventing a match."
+    "jlpA": {
+      "upstream_sequence": "TTTTAAATTTTTTAAGGAGAAAACT",
+      "source_note": "Real upstream sequence from GenBank AF295104.1 (complete cds record - the true annotated ATG start is confirmed at this position, with 199 nt of real 5' context available; shown here is the 25 nt immediately before codon 1).",
+      "sd_highlight": {
+        "start": 14,
+        "length": 5
+      },
+      "confidence_note": "This is a strong real example: AGGAG sits 6-11 nt before the start codon - right in the classic optimal spacing range - and closely matches the AGGAGG Shine-Dalgarno consensus. A genuinely convincing real ribosome-binding site."
     },
     "cadF": {
       "upstream_sequence": "TTTGAAGGTAATTTAGAT",
