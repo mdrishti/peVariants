@@ -1,47 +1,42 @@
 {
   "level": 5,
   "title": "Marked Letters (Methylation and Gene Expression On/Off)",
-  "learning_goal": "Learn that bacteria can chemically 'tag' specific short DNA motifs with a methyl group (methylation), without changing the underlying nucleotide letter, and that whether that tag gets applied can depend on the cell's environment.",
-  "simplification_note": "Real bacterial methylation and gene regulation involves many interacting factors (promoter strength, transcription factors, methylation of both DNA strands, timing, etc). This level uses one well-documented type of bacterial methylation motif (recognized by Dcm-family methyltransferases, common across many bacteria and reported in some Campylobacter methylation systems) as a simplified, single-rule teaching model. The environment-dependence in Round 2 is also simplified for teaching purposes - real Campylobacter gene regulation (including phase variation and methylome changes across growth conditions) is more complex than a single on/off switch, but the core idea - that the SAME DNA sequence can be expressed differently depending on conditions - is real and important (this is 'epigenetics').",
+  "learning_goal": "Learn that bacteria can chemically 'tag' specific short DNA motifs with a methyl group (methylation), without changing the underlying nucleotide letter, and that in Campylobacter jejuni a single gene (cj0031) can itself phase-vary ON/OFF, switching genome-wide methylation - and downstream gene expression - on and off as a group ('phasevarion').",
+  "simplification_note": "This level uses a REAL, published Campylobacter jejuni system: the phase-variable Type IIG restriction-modification enzyme Cj0031 (also called ModH) in strain NCTC11168, which methylates adenine within 5'-CCYGA (Y = C or T) sites genome-wide (Anjum et al., Nucleic Acids Research 2016, PMC4889913). Two things are simplified for teaching: (1) cj0031 itself switches ON/OFF via slipped-strand mispairing in a homopolymeric tract - real, but we present it here as a simple toggle rather than modeling the repeat-tract mechanism itself; and (2) the actual paper found only a WEAK statistical association between CCYGA methylation and measured gene expression changes (not a clean single-gene on/off switch) - so this level is honest that 'motif present' does not automatically mean 'this exact gene is regulated by it', especially when the motif sits deep inside a coding sequence rather than near a promoter or ribosome binding site.",
   "rules": [
-    "This level has 2 rounds: Round 1 shows each gene's real sequence with a methylation blob marking any methylated base; Round 2 explores how environment can change the outcome.",
+    "This level has 2 rounds: Round 1 checks jlpA, cadF and ciaB for the real Campylobacter methylation motif; Round 2 explores the real cj0031 phase-variation mechanism using a literature-documented example gene (peb1A).",
     "Methylation never changes a nucleotide letter \u2014 the DNA sequence and protein stay identical either way.",
-    "A blob (\ud83d\udd35) means that base is really methylated. No blob means no methylation - use the motif table to understand why.",
+    "A blob (\ud83d\udd35) means that base is really methylated. No blob means the motif isn't present in that fragment - use the motif table to understand why.",
     "You must give an ON/OFF answer for all 3 genes in Round 1 to unlock Round 2.",
-    "In Round 2, the SAME gene can flip ON/OFF depending on the environment toggle - read the explanation before answering the final question."
+    "In Round 2, the SAME gene's methylation depends on whether the cj0031 enzyme is phase-ON or phase-OFF - read the explanation before answering the final question."
   ],
   "motif_table": {
-    "description": "Material for Round 1: a table of known bacterial DNA methylation motifs, which nucleotide within the motif gets methylated, and the simplified on/off rule used in this game.",
+    "description": "Material for Round 1: the real Campylobacter jejuni methylation motif recognized by the phase-variable Cj0031 (ModH) enzyme (strain NCTC11168), and the simplified on/off rule used in this game.",
     "motifs": [
       {
-        "motif": "CCWGG (W = A or T)",
-        "methylated_base": "the first C in the motif becomes 5-methylcytosine (5mC)",
-        "methyltransferase_family": "Dcm-type cytosine methyltransferase",
-        "game_rule": "If this motif is found within the gene fragment shown, that gene's expression is switched OFF in this puzzle."
-      },
-      {
-        "motif": "GATC",
-        "methylated_base": "the A becomes N6-methyladenine (6mA)",
-        "methyltransferase_family": "Dam-type adenine methyltransferase",
-        "game_rule": "If this motif is found within the gene fragment shown, that gene's expression is switched OFF in this puzzle."
+        "motif": "CCYGA (Y = C or T, i.e. CCCGA or CCTGA)",
+        "methylated_base": "the final A becomes N6-methyladenine (6mA), on one strand only (hemimethylated)",
+        "methyltransferase_family": "Cj0031 (ModH) - a phase-variable Type IIG restriction-modification enzyme unique to C. jejuni",
+        "game_rule": "If this motif is found within the gene fragment shown AND cj0031 is phase-ON, that occurrence gets methylated."
       }
     ],
-    "default_rule": "If NEITHER motif is present anywhere in the gene fragment, no methylation occurs and the gene's expression stays ON."
+    "default_rule": "If the motif is absent from the fragment, there is nothing for Cj0031 to methylate there, regardless of its phase state."
   },
   "materials_provided": [
     "The codon table",
-    "The motif table above",
-    "Each gene's real sequence, already assembled, with a methylation blob (🔵) marking any base that's actually methylated"
+    "The real motif table above",
+    "Each gene's real sequence, already assembled, with a methylation blob (\ud83d\udd35) marking any base that's actually methylated"
   ],
   "instructions": [
     "Round 1:",
-    "1. Look at the gene's sequence and the motif table. If a blob (🔵) sits on the sequence, that base is really methylated.",
-    "2. Decide: is this gene's expression ON or OFF? Use the motif table's rule to reason it out.",
+    "1. Look at each gene's real sequence and the motif table. If a blob (\ud83d\udd35) sits on the sequence, that base is really methylated.",
+    "2. Decide: is this gene's expression ON or OFF? (For these 3 genes, the motif isn't present in the fragment shown - so methylation can't act here at all.)",
     "3. Check your answer. The game reveals the correct call and explains why.",
     "4. Repeat for all 3 genes to unlock Round 2.",
     "Round 2:",
-    "5. Toggle between 'inside the host gut' and 'outside the host' to see how the SAME gene's ON/OFF state can change depending on whether the methylation enzyme is active in that environment.",
-    "6. Answer the final question about what happens to expression when the bacterium moves environments."
+    "5. Meet peb1A - a real, literature-documented gene that DOES contain a genuine CCTGA site, deep inside its coding sequence.",
+    "6. Toggle cj0031 phase ON/OFF to see whether that real site actually gets methylated, and read why 'methylated' isn't automatically the same as 'this gene is switched off'.",
+    "7. Answer the final question about what the real published research actually found."
   ],
   "gene_analysis": {
     "jlpA": {
@@ -49,68 +44,73 @@
       "motif_position": null,
       "motif_found": null,
       "expression_state": "ON",
-      "reasoning": "Neither CCWGG nor GATC appears anywhere in this fragment, so no methylation switch is triggered - expression stays ON regardless of environment."
+      "reasoning": "CCYGA (CCCGA or CCTGA) does not appear anywhere in this fragment, so Cj0031 has nothing to methylate here - expression stays ON regardless of cj0031's phase state."
     },
     "cadF": {
       "nucleotide_sequence": "ATGGATAATCGTTATGCACCAGGTGTTAGACTTGGTTATCATTTTTGA",
-      "motif_position": {
-        "start_0based": 18,
-        "length": 5
-      },
-      "motif_found": "CCAGG (a CCWGG match) at nucleotide position 19-23 (1-based)",
-      "methylated_nucleotide": "the C at position 19 becomes 5-methylcytosine",
-      "expression_state": "OFF",
-      "reasoning": "The CCWGG motif is present. Whether it actually gets methylated - and so whether cadF is really switched OFF - depends on whether the methyltransferase enzyme is active, which is what Round 2 explores."
+      "motif_position": null,
+      "motif_found": null,
+      "expression_state": "ON",
+      "reasoning": "CCYGA (CCCGA or CCTGA) does not appear anywhere in this fragment, so Cj0031 has nothing to methylate here - expression stays ON regardless of cj0031's phase state."
     },
     "ciaB": {
       "nucleotide_sequence": "ATGAATAATTTTAAAGAAATAGCTAAATTGGTTAGAAAATACAAATAG",
       "motif_position": null,
       "motif_found": null,
       "expression_state": "ON",
-      "reasoning": "Neither CCWGG nor GATC appears anywhere in this fragment, so no methylation switch is triggered - expression stays ON regardless of environment."
+      "reasoning": "CCYGA (CCCGA or CCTGA) does not appear anywhere in this fragment, so Cj0031 has nothing to methylate here - expression stays ON regardless of cj0031's phase state."
     }
   },
   "round2": {
-    "title": "Round 2 - Same DNA, Different Environment",
-    "intro": "cadF has the CCWGG motif sitting in its DNA all the time - that never changes. But having the motif is not the same as it actually being methylated. Whether the Dcm-type methyltransferase enzyme is switched on to actually place that methyl tag can depend on conditions the bacterium senses.",
+    "title": "Round 2 - The Real cj0031 Phasevarion (using peb1A, a real example)",
+    "gene_used": "peb1A",
+    "gene_note": "peb1A (locus cj0921c) is a real C. jejuni adhesin gene. It's one of the genes discussed in the actual Cj0031 phasevarion study (Anjum et al. 2016) as showing an expression difference between the cj0031-ON and cj0031-deletion strains.",
+    "real_upstream_and_start": "...CAAAATTGAAAGGAGAAAAA-ATG...",
+    "real_motif_context": {
+      "sequence_window": "ATGTTAAATTTAGTGAATTTCCTGATTATCCAAGTATAAAAGCTG",
+      "highlight_start": 20,
+      "highlight_length": 5,
+      "position_note": "This CCTGA is real GenBank/genome sequence from inside peb1A, about 538 nt (roughly codon 180) into the gene - deep in the coding region, not near the promoter or ribosome binding site."
+    },
+    "intro": "peb1A's DNA contains a real CCTGA site, all the time - that sequence never changes. Whether it actually gets methylated depends on whether the Cj0031 (ModH) enzyme is in its phase-ON or phase-OFF state, which C. jejuni switches stochastically via slipped-strand mispairing in a repeat tract within the cj0031 gene itself.",
     "environments": [
       {
-        "key": "gut",
-        "label": "Inside the host gut",
+        "key": "on",
+        "label": "cj0031 phase ON",
         "methylation_active": true,
-        "effect_on_cadF": "OFF",
-        "explanation": "In this simplified scenario, conditions inside the gut activate the methyltransferase. The CCWGG motif in cadF gets methylated, and cadF expression is switched OFF."
+        "effect_on_gene": "Methylated",
+        "explanation": "When cj0031 is phase-ON, the ModH enzyme is made and active. The real CCTGA site in peb1A gets methylated (6mA on one strand)."
       },
       {
-        "key": "outside",
-        "label": "Outside the host (e.g. water/environment)",
+        "key": "off",
+        "label": "cj0031 phase OFF",
         "methylation_active": false,
-        "effect_on_cadF": "ON",
-        "explanation": "Outside the host, the methyltransferase is inactive in this scenario. The CCWGG motif is still physically present in the DNA, but with nothing to methylate it, cadF stays unmethylated and expression is ON."
+        "effect_on_gene": "Unmethylated",
+        "explanation": "When cj0031 is phase-OFF (the gene is switched off by slipped-strand mispairing), no ModH enzyme is made. The CCTGA site in peb1A is still physically present but stays unmethylated."
       }
     ],
-    "unaffected_genes_note": "jlpA and ciaB have no methylation motif at all in either environment, so their expression stays ON no matter what you toggle - only a gene that actually carries the motif (cadF here) can be switched by this mechanism.",
-    "quiz_question": "The bacterium moves from inside the host gut to outside (e.g. into water). What happens to cadF expression, and why?",
+    "unaffected_genes_note": "jlpA and ciaB don't contain the CCYGA motif at all in the fragments you saw, so toggling cj0031 never affects them - only genes that actually carry a real CCYGA site (like this peb1A example) can be touched by this mechanism.",
+    "quiz_question": "The actual published study (Anjum et al. 2016) compared a cj0031-ON strain to a cj0031-deletion strain and looked at whether CCYGA methylation predicted which genes changed expression. What did they actually find?",
     "quiz_options": [
       {
-        "key": "on_enzyme_off",
-        "label": "Switches ON - the methyltransferase becomes inactive outside the host, so the motif no longer gets methylated",
+        "key": "weak_link",
+        "label": "Only a weak statistical association - many genes changed expression, but it correlated poorly with which genes actually had CCYGA sites",
         "correct": true
       },
       {
-        "key": "off_stays",
-        "label": "Stays OFF - once methylated, always methylated forever",
+        "key": "perfect_switch",
+        "label": "A perfect one-to-one switch - every gene with a CCYGA site changed expression in lockstep with methylation",
         "correct": false
       },
       {
-        "key": "sequence_changes",
-        "label": "Switches ON - the CCWGG motif is deleted from the DNA outside the host",
+        "key": "no_effect",
+        "label": "No effect at all - gene expression was identical between the two strains",
         "correct": false
       }
     ],
-    "quiz_explanation": "cadF switches back ON outside the host. The DNA sequence itself never changes - the CCWGG motif is still there. What changes is whether the methyltransferase enzyme is active to actually place the methyl tag. This is the core idea of epigenetics: the same DNA sequence can be read differently depending on chemical marks that respond to the environment."
+    "quiz_explanation": "The real paper found hundreds of genes changed expression between the cj0031-ON and deletion strains, but only a WEAK association with actual CCYGA sites - the authors explicitly note this. That's honest, real biology: just because a gene is methylated somewhere in its sequence doesn't mean that site is the reason its expression changed. Regulatory effects are most reliably linked to sites near promoters or ribosome-binding regions, not just anywhere the motif happens to occur - and most real motif copies (like the ones methylated across the genome) exist for genome defense, not gene regulation."
   },
-  "discussion_prompt": "Ask players: unlike levels 2-4, methylation doesn't change any nucleotide LETTER at all - the sequence and the protein it would make are identical in every environment. So what actually changed between Round 1 and Round 2? (Answer: nothing in the DNA sequence changed - what changed was whether the methylation MACHINERY was active. This is 'epigenetics' - control layered on top of the DNA sequence, and it can respond to environment.)",
+  "discussion_prompt": "Ask players: unlike levels 2-4, methylation doesn't change any nucleotide LETTER at all - the DNA sequence and the protein it would make are identical whether cj0031 is phase-ON or phase-OFF. So what actually changed between Round 1 and Round 2? (Answer: nothing in the DNA sequence changed - what changed was whether the METHYLATION MACHINERY (Cj0031/ModH) was active. This is 'epigenetics' - control layered on top of the DNA sequence. And real research shows it's messier than a clean on/off switch: having the motif doesn't guarantee a gene's expression is controlled by it - that link was only weakly supported even in the actual published study.)",
   "scoring": {
     "points_per_correct_on_off_call": 20,
     "bonus_for_all_three_correct": 30,

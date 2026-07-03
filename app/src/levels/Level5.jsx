@@ -126,6 +126,8 @@ function Round2({ onDone }) {
   const [selectedOption, setSelectedOption] = useState(null);
   const [answered, setAnswered] = useState(false);
   const env = r2.environments.find((e) => e.key === envKey);
+  const ctx = r2.real_motif_context;
+  const highlightEnd = ctx.highlight_start + ctx.highlight_length;
 
   function answer(opt) {
     setSelectedOption(opt.key);
@@ -136,7 +138,23 @@ function Round2({ onDone }) {
   return (
     <div className="compare-panel">
       <h3>{r2.title}</h3>
+      <p className="hint">{r2.gene_note}</p>
       <p>{r2.intro}</p>
+
+      <p className="hint">Real sequence from inside {r2.gene_used} (not invented):</p>
+      <div className="methylation-view">
+        {ctx.sequence_window.split('').map((n, i) => {
+          const isHit = i >= ctx.highlight_start && i < highlightEnd;
+          const isMethylatedNow = isHit && env.methylation_active;
+          return (
+            <span key={i} className="methylation-nt-col">
+              {isMethylatedNow && <span className="methylation-blob" title="Methylated base">🔵</span>}
+              <span className={'diff-nt' + (isHit ? ' motif-nt-selected' : '')}>{n}</span>
+            </span>
+          );
+        })}
+      </div>
+      <p className="hint">{ctx.position_note}</p>
 
       <div className="quiz-row">
         {r2.environments.map((e) => (
@@ -148,8 +166,8 @@ function Round2({ onDone }) {
 
       <table className="detail-table">
         <tbody>
-          <tr><td>Methyltransferase active?</td><td>{env.methylation_active ? 'Yes' : 'No'}</td></tr>
-          <tr><td>cadF expression</td><td><strong>{env.effect_on_cadF}</strong></td></tr>
+          <tr><td>Cj0031 (ModH) enzyme active?</td><td>{env.methylation_active ? 'Yes' : 'No'}</td></tr>
+          <tr><td>This CCTGA site</td><td><strong>{env.effect_on_gene}</strong></td></tr>
         </tbody>
       </table>
       <p className="classification">{env.explanation}</p>
