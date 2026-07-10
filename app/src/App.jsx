@@ -45,6 +45,10 @@ function App() {
         <main key={levelId}>
           {active ? <active.Component /> : <p className="pick-hint">Pick a level above to start.</p>}
         </main>
+
+        <footer className="app-footer">
+          © {new Date().getFullYear()} Disha Tandon. Licensed under GPL-3.0.
+        </footer>
       </div>
     </PlayerProvider>
   );
