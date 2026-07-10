@@ -4,11 +4,17 @@ import codonData from '../data/codon_table.json';
 
 const table = codonData.codon_table;
 
-export default function CodonAssigner({ sequence, aminoLetters, onComplete }) {
+/**
+ * `activeCount` limits how many codons must actually be assigned (e.g. up to a premature STOP) -
+ * any codons beyond that are still shown (so players can see what comes next in the real sequence)
+ * but rendered as disabled, unfillable boxes. Defaults to all codons when omitted.
+ */
+export default function CodonAssigner({ sequence, aminoLetters, activeCount, onComplete }) {
   const codons = useMemo(() => codonsOf(sequence), [sequence]);
+  const limit = activeCount ?? codons.length;
   const initialTiles = useMemo(() => shuffle(makeTiles(aminoLetters)), [aminoLetters]);
   const [bank, setBank] = useState(initialTiles);
-  const [assigned, setAssigned] = useState(Array(codons.length).fill(null));
+  const [assigned, setAssigned] = useState(Array(limit).fill(null));
   const [checked, setChecked] = useState(false);
 
   function placeInFirstEmpty(tile) {
@@ -36,7 +42,7 @@ export default function CodonAssigner({ sequence, aminoLetters, onComplete }) {
   function check() {
     setChecked(true);
     const built = assigned.map((a) => a.letter).join('');
-    const correctSeq = codons.map((c) => table[c]).join('');
+    const correctSeq = codons.slice(0, limit).map((c) => table[c]).join('');
     if (onComplete) onComplete(built, built === correctSeq);
   }
 
@@ -57,6 +63,14 @@ export default function CodonAssigner({ sequence, aminoLetters, onComplete }) {
       </div>
       <div className="codon-row">
         {codons.map((codon, i) => {
+          if (i >= limit) {
+            return (
+              <div key={i} className="codon-col codon-col-disabled">
+                <div className="codon-label">{codon}</div>
+                <span className="slot amino-slot disabled" title="Translation already stopped before this codon" />
+              </div>
+            );
+          }
           const correctAA = table[codon];
           const a = assigned[i];
           return (
@@ -78,7 +92,7 @@ export default function CodonAssigner({ sequence, aminoLetters, onComplete }) {
         })}
       </div>
       <div className="builder-controls">
-        <span>{assigned.filter(Boolean).length}/{codons.length} assigned</span>
+        <span>{assigned.filter(Boolean).length}/{limit} assigned</span>
         <button disabled={!full} onClick={check}>Check amino acids</button>
       </div>
     </div>
