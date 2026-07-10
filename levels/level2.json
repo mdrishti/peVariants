@@ -4,23 +4,22 @@
   "learning_goal": "Learn that a Single Nucleotide Polymorphism (SNP) can change a codon's letters without changing the amino acid it codes for, because the genetic code is redundant (several codons can encode the same amino acid). This is called a synonymous (silent) mutation.",
   "rules": [
     "You'll work with whichever gene you chose in Level 1 - your choice carries over automatically.",
-    "The reference DNA sequence is shown the whole time; the reference PROTEIN only appears after you finish assigning your own amino acids - so you can't just copy it.",
-    "Build the sample tiles first, then assign amino acids, before you're shown the comparison.",
-    "There is exactly ONE nucleotide difference between your sample and the reference.",
-    "A single nucleotide change does not always change the amino acid - check the protein comparison, not just the DNA, before deciding."
+    "Both the reference and your sample DNA sequences are shown in full right away - your job is to spot the ONE nucleotide that differs between them.",
+    "Click directly on the nucleotide in the sample row that you think differs from the reference.",
+    "Once you find it, the affected codon's amino acid is blanked out - use the codon table to work out what it should be and fill it in yourself.",
+    "A single nucleotide change does not always change the amino acid - the protein comparison at the end tells you whether it did here."
   ],
   "materials_provided": [
     "The codon table",
-    "The reference (known/healthy) nucleotide sequence, shown on screen the whole time - its amino acid sequence only unlocks after you finish your own codon-to-amino-acid assignment",
-    "A restricted set of 48 nucleotide squares - one full tile set, but built from an unlabeled SAMPLE sequence that may or may not match the reference exactly",
-    "16 amino acid squares (including one '*' STOP tile) to assign to the sample sequence's codons"
+    "The reference (known/healthy) nucleotide sequence and full amino acid sequence, shown on screen the whole time",
+    "Your sample's full nucleotide sequence, shown alongside the reference so you can click to locate the ONE nucleotide difference",
+    "An amino acid picker (all 20 amino acids plus the '*' STOP symbol) to fill in the blanked codon once you've found the SNP"
   ],
   "instructions": [
-    "1. Arrange the 48 nucleotide squares in order to build the sample sequence you were given (its identity - mutant or identical to reference - is not revealed yet).",
-    "2. Split into 16 codons (the last one is a STOP codon) and assign the matching amino acid tile under each codon using the codon table.",
-    "3. Compare your arranged sample sequence, position by position, against the reference sequence shown at the top of the screen. Find the ONE nucleotide position that differs.",
-    "4. Compare your assigned amino acid sequence against the reference amino acid sequence (also shown at the top). Are they the same or different at the position of the SNP?",
-    "5. If the amino acid is unchanged, the game confirms: 'Synonymous mutation - the protein is unaffected!' and explains why using the codon table (show both codons map to the same letter)."
+    "1. Compare the reference DNA row against your sample DNA row, letter by letter, and click the ONE nucleotide in the sample that differs.",
+    "2. The codon containing that nucleotide is revealed as a blank in your protein row. Look up the changed codon in the codon table and click the amino acid you think it now codes for.",
+    "3. Once correct, compare your completed protein row against the reference protein row. Are they the same or different at the position of the SNP?",
+    "4. If the amino acid is unchanged, the game confirms: 'Synonymous mutation - the protein is unaffected!' and explains why using the codon table (both codons map to the same letter)."
   ],
   "genes": {
     "jlpA": {

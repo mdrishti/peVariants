@@ -95,8 +95,16 @@ header h1 { margin-bottom: 0.25rem; }
 .result-ok { color: #2e9e4d; font-weight: 600; }
 .result-bad { color: #d1414a; font-weight: 600; }
 
-.diff-view { font-family: monospace; margin: 0.75rem 0; }
-.diff-row { display: flex; align-items: center; gap: 0.15rem; margin-bottom: 0.3rem; }
+.diff-view { font-family: monospace; margin: 0.75rem 0; max-width: 100%; overflow-x: auto; }
+.diff-row { display: flex; align-items: center; gap: 0.15rem; margin-bottom: 0.3rem; flex-wrap: nowrap; width: max-content; }
+.diff-codon-group {
+  display: inline-flex;
+  gap: 0.15rem;
+  padding: 0.1rem 0.25rem;
+  margin-right: 0.35rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
 .diff-label { width: 6.5rem; font-family: system-ui, sans-serif; font-size: 0.8rem; color: #666; flex-shrink: 0; }
 .diff-nt {
   width: 1.4rem;
@@ -107,6 +115,25 @@ header h1 { margin-bottom: 0.25rem; }
   border-radius: 3px;
 }
 .diff-highlight { background: #ffe08a; outline: 2px solid #d1971a; }
+.diff-nt-clickable {
+  cursor: pointer;
+  border: 1px solid #ccc;
+  background: #fff;
+  color: #1b4d2e;
+  font-family: monospace;
+  font-size: 1rem;
+  padding: 0;
+}
+.diff-nt-clickable:disabled { cursor: default; }
+.diff-nt-clickable:not(:disabled):hover { background: #f0f0f0; }
+.diff-wrong { background: #f8c4c4 !important; outline: 2px solid #d1414a; }
+.diff-blank {
+  border: 1px dashed #999;
+  background: #f7f7f7;
+  color: #999;
+}
+
+.aa-picker { margin-top: 0.75rem; }
 
 .detail-table { border-collapse: collapse; margin: 0.75rem 0; }
 .detail-table td, .detail-table th { border: 1px solid #ddd; padding: 0.4rem 0.7rem; text-align: left; }
