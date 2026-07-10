@@ -69,3 +69,7 @@ All genes used here help <i>Campylobacter</i> to attach, invade or feed off host
 | peb1A | Adhesin gene used only in Level 5, Round 2 - real example gene from the published Cj0031 phasevarion study | cj0921c (NCTC11168 genome, NC_002163.1) |
 
 Levels 1-4 are generalized across jlpA/cadF/ciaB - whichever one a player picks in Level 1 carries through automatically. Level 4's Shine-Dalgarno round uses real GenBank upstream sequence: jlpA and ciaB both show a strong, real Shine-Dalgarno-like motif; cadF's is a weaker, lower-confidence candidate since its GenBank record only includes limited upstream context. Level 5 Round 1 reuses jlpA/cadF/ciaB; Round 2 uses peb1A as the one gene in the game with a confirmed real methylation site, since none of the three main genes happen to carry the real motif in their available sequence.
+
+## License
+
+© 2026 Disha Tandon. Licensed under [GPL-3.0](LICENSE).
