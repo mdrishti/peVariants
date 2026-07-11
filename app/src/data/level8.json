@@ -1,0 +1,252 @@
+{
+  "level": 8,
+  "title": "Flipped Around (Inversion)",
+  "learning_goal": "Learn that DNA is double-stranded and antiparallel, with A always pairing with T and C always pairing with G on the opposite strand. When a segment of DNA physically flips around in place (an inversion - caused by the DNA breaking in two places and rejoining backwards), what appears in that spot is not simply the original letters in reverse order, but their REVERSE COMPLEMENT. This is a distinct class of structural variant from the insertions, deletions and duplications in Levels 4 and 7, since the total length never changes.",
+  "rules": [
+    "You'll work with whichever gene you chose in Level 1 - your choice carries over automatically.",
+    "First, a quick primer: for any DNA letter, its complementary base pair is fixed - A pairs with T, and C pairs with G, always.",
+    "A 6-nucleotide segment of your gene has been inverted - flipped end-to-end in place. The segment's total length never changes.",
+    "To predict what the inverted segment reads as, you must do TWO things to the original segment: reverse the order of the letters, AND swap each letter for its complementary base.",
+    "Because the inversion is exactly 6 nt (a multiple of 3), only the 2 codons inside the inverted segment can change - everything else in the protein is guaranteed to be unaffected."
+  ],
+  "materials_provided": [
+    "A base-pairing reference (A<->T, C<->G)",
+    "The codon table",
+    "The reference nucleotide sequence and full amino acid sequence, shown on screen the whole time",
+    "The original 6-letter segment that gets inverted, shown clearly",
+    "A letter picker (A/C/G/T) to construct the reverse complement yourself, one base at a time"
+  ],
+  "instructions": [
+    "1. Complete the base-pairing primer - for a few example letters, pick the correct complementary base.",
+    "2. Look at the original 6-letter segment from the reference. Working from its LAST letter to its FIRST, pick the complementary base for each one - that builds the reverse complement, which is what actually appears in the inverted sample.",
+    "3. Check your answer against what really appears in the sample at that spot.",
+    "4. See which of the 2 affected codons' amino acids changed, and compare the reference protein to the sample protein around the inversion.",
+    "5. The reveal explains why a physical inversion produces a reverse COMPLEMENT, not just reversed letters."
+  ],
+  "genes": {
+    "jlpA": {
+      "reference": {
+        "nucleotide_sequence": "ATGAAAAAAGGTATTTTTCTCTCTATTGGAATAGCTGTTTTGTTTTAA",
+        "amino_acid_sequence": "MKKGIFLSIGIAVLF*",
+        "codons": [
+          "ATG",
+          "AAA",
+          "AAA",
+          "GGT",
+          "ATT",
+          "TTT",
+          "CTC",
+          "TCT",
+          "ATT",
+          "GGA",
+          "ATA",
+          "GCT",
+          "GTT",
+          "TTG",
+          "TTT",
+          "TAA"
+        ]
+      },
+      "mutant": {
+        "nucleotide_sequence": "ATGAAAAAAGGTATTTTTCTCAATAGAGGAATAGCTGTTTTGTTTTAA",
+        "amino_acid_sequence": "MKKGIFLNRGIAVLF*",
+        "codons": [
+          "ATG",
+          "AAA",
+          "AAA",
+          "GGT",
+          "ATT",
+          "TTT",
+          "CTC",
+          "AAT",
+          "AGA",
+          "GGA",
+          "ATA",
+          "GCT",
+          "GTT",
+          "TTG",
+          "TTT",
+          "TAA"
+        ]
+      },
+      "inversion_details": {
+        "inversion_start_0based_nt": 21,
+        "inversion_length": 6,
+        "original_segment": "TCTATT",
+        "inverted_segment": "AATAGA",
+        "affected_codon_numbers_1based": [
+          8,
+          9
+        ],
+        "reference_codon_pair": [
+          "TCT",
+          "ATT"
+        ],
+        "mutant_codon_pair": [
+          "AAT",
+          "AGA"
+        ],
+        "reference_amino_acid_pair": [
+          "S (Serine)",
+          "I (Isoleucine)"
+        ],
+        "mutant_amino_acid_pair": [
+          "N (Asparagine)",
+          "R (Arginine)"
+        ],
+        "classification": "Inversion - the 6-letter segment TCTATT got flipped end-to-end AND complemented (because DNA is double-stranded and antiparallel, a physically inverted segment reads as its reverse complement, AATAGA, not just its letters in reverse). The inversion is exactly 6 nt (a multiple of 3), so the reading frame is NOT disturbed - only the 2 codons inside the inverted segment can change; everything before and after them translates identically to the reference."
+      }
+    },
+    "cadF": {
+      "reference": {
+        "nucleotide_sequence": "ATGGATAATCGTTATGCACCAGGTGTTAGACTTGGTTATCATTTTTGA",
+        "amino_acid_sequence": "MDNRYAPGVRLGYHF*",
+        "codons": [
+          "ATG",
+          "GAT",
+          "AAT",
+          "CGT",
+          "TAT",
+          "GCA",
+          "CCA",
+          "GGT",
+          "GTT",
+          "AGA",
+          "CTT",
+          "GGT",
+          "TAT",
+          "CAT",
+          "TTT",
+          "TGA"
+        ]
+      },
+      "mutant": {
+        "nucleotide_sequence": "ATGGATAATCGTTATGCACCAAACACCAGACTTGGTTATCATTTTTGA",
+        "amino_acid_sequence": "MDNRYAPNTRLGYHF*",
+        "codons": [
+          "ATG",
+          "GAT",
+          "AAT",
+          "CGT",
+          "TAT",
+          "GCA",
+          "CCA",
+          "AAC",
+          "ACC",
+          "AGA",
+          "CTT",
+          "GGT",
+          "TAT",
+          "CAT",
+          "TTT",
+          "TGA"
+        ]
+      },
+      "inversion_details": {
+        "inversion_start_0based_nt": 21,
+        "inversion_length": 6,
+        "original_segment": "GGTGTT",
+        "inverted_segment": "AACACC",
+        "affected_codon_numbers_1based": [
+          8,
+          9
+        ],
+        "reference_codon_pair": [
+          "GGT",
+          "GTT"
+        ],
+        "mutant_codon_pair": [
+          "AAC",
+          "ACC"
+        ],
+        "reference_amino_acid_pair": [
+          "G (Glycine)",
+          "V (Valine)"
+        ],
+        "mutant_amino_acid_pair": [
+          "N (Asparagine)",
+          "T (Threonine)"
+        ],
+        "classification": "Inversion - the 6-letter segment GGTGTT got flipped end-to-end AND complemented (because DNA is double-stranded and antiparallel, a physically inverted segment reads as its reverse complement, AACACC, not just its letters in reverse). The inversion is exactly 6 nt (a multiple of 3), so the reading frame is NOT disturbed - only the 2 codons inside the inverted segment can change; everything before and after them translates identically to the reference."
+      }
+    },
+    "ciaB": {
+      "reference": {
+        "nucleotide_sequence": "ATGAATAATTTTAAAGAAATAGCTAAATTGGTTAGAAAATACAAATAG",
+        "amino_acid_sequence": "MNNFKEIAKLVRKYK*",
+        "codons": [
+          "ATG",
+          "AAT",
+          "AAT",
+          "TTT",
+          "AAA",
+          "GAA",
+          "ATA",
+          "GCT",
+          "AAA",
+          "TTG",
+          "GTT",
+          "AGA",
+          "AAA",
+          "TAC",
+          "AAA",
+          "TAG"
+        ]
+      },
+      "mutant": {
+        "nucleotide_sequence": "ATGAATAATTTTAAAGAAATATTTAGCTTGGTTAGAAAATACAAATAG",
+        "amino_acid_sequence": "MNNFKEIFSLVRKYK*",
+        "codons": [
+          "ATG",
+          "AAT",
+          "AAT",
+          "TTT",
+          "AAA",
+          "GAA",
+          "ATA",
+          "TTT",
+          "AGC",
+          "TTG",
+          "GTT",
+          "AGA",
+          "AAA",
+          "TAC",
+          "AAA",
+          "TAG"
+        ]
+      },
+      "inversion_details": {
+        "inversion_start_0based_nt": 21,
+        "inversion_length": 6,
+        "original_segment": "GCTAAA",
+        "inverted_segment": "TTTAGC",
+        "affected_codon_numbers_1based": [
+          8,
+          9
+        ],
+        "reference_codon_pair": [
+          "GCT",
+          "AAA"
+        ],
+        "mutant_codon_pair": [
+          "TTT",
+          "AGC"
+        ],
+        "reference_amino_acid_pair": [
+          "A (Alanine)",
+          "K (Lysine)"
+        ],
+        "mutant_amino_acid_pair": [
+          "F (Phenylalanine)",
+          "S (Serine)"
+        ],
+        "classification": "Inversion - the 6-letter segment GCTAAA got flipped end-to-end AND complemented (because DNA is double-stranded and antiparallel, a physically inverted segment reads as its reverse complement, TTTAGC, not just its letters in reverse). The inversion is exactly 6 nt (a multiple of 3), so the reading frame is NOT disturbed - only the 2 codons inside the inverted segment can change; everything before and after them translates identically to the reference."
+      }
+    }
+  },
+  "scoring": {
+    "points_for_primer": 10,
+    "points_for_constructing_reverse_complement": 30,
+    "points_for_protein_comparison": 30
+  }
+}

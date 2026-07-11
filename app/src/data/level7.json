@@ -1,0 +1,283 @@
+{
+  "level": 7,
+  "title": "Copy-Paste Errors (Tandem Duplication)",
+  "learning_goal": "Learn about tandem duplication - a real mutational mechanism (often caused by DNA polymerase 'slipping' and re-reading the same stretch of template twice during replication) where a segment of DNA ends up copied immediately next to itself. Unlike Level 4's insertion, the extra letters here are NOT new/arbitrary - they are an exact copy of nearby sequence. Whether a duplication causes a frameshift depends on the same multiple-of-3 rule as insertions and deletions.",
+  "rules": [
+    "You'll work with whichever gene you chose in Level 1 - your choice carries over automatically.",
+    "This level has 2 examples: an IN-FRAME duplication (one whole codon copied, 3 nt - no frameshift) and a FRAMESHIFT duplication (2 nt copied - not a multiple of 3, so it shifts the reading frame).",
+    "In both cases, the extra letters are not arbitrary - they're an exact copy of the sequence immediately before them. That's what makes this a 'duplication' rather than a generic insertion.",
+    "For the in-frame example, only ONE extra amino acid appears (a repeat of the duplicated codon's amino acid) - everything else in the protein stays identical.",
+    "For the frameshift example, everything from the duplication point onward is scrambled, exactly like Level 4's insertion - because 2 is not a multiple of 3."
+  ],
+  "materials_provided": [
+    "The codon table",
+    "The reference nucleotide sequence and full amino acid sequence, shown on screen the whole time",
+    "Your sample's full nucleotide sequence, with a tandem-duplicated segment inserted",
+    "A row of candidate duplication points (gaps between reference codons) for the player to test"
+  ],
+  "instructions": [
+    "1. Compare your sample to the reference - it has extra letters that exactly match the sequence right before them.",
+    "2. Locate the gap where the duplication happened, the same way as Level 4.",
+    "3. For the in-frame example: compare the reference protein to your sample's protein directly - find the one extra repeated amino acid.",
+    "4. For the frameshift example: re-split the sequence into codons of 3 from position 1 and re-translate, exactly like Level 4 - notice everything downstream is now different."
+  ],
+  "genes": {
+    "jlpA": {
+      "reference": {
+        "nucleotide_sequence": "ATGAAAAAAGGTATTTTTCTCTCTATTGGAATAGCTGTTTTGTTTTAA",
+        "amino_acid_sequence": "MKKGIFLSIGIAVLF*",
+        "codons": [
+          "ATG",
+          "AAA",
+          "AAA",
+          "GGT",
+          "ATT",
+          "TTT",
+          "CTC",
+          "TCT",
+          "ATT",
+          "GGA",
+          "ATA",
+          "GCT",
+          "GTT",
+          "TTG",
+          "TTT",
+          "TAA"
+        ]
+      },
+      "inframe_mutant": {
+        "nucleotide_sequence": "ATGAAAAAAGGTATTTTTCTCTCTATTGGAGGAATAGCTGTTTTGTTTTAA",
+        "amino_acid_sequence": "MKKGIFLSIGGIAVLF*",
+        "codons": [
+          "ATG",
+          "AAA",
+          "AAA",
+          "GGT",
+          "ATT",
+          "TTT",
+          "CTC",
+          "TCT",
+          "ATT",
+          "GGA",
+          "GGA",
+          "ATA",
+          "GCT",
+          "GTT",
+          "TTG",
+          "TTT",
+          "TAA"
+        ],
+        "duplication_details": {
+          "duplicated_codon": "GGA",
+          "duplicated_codon_number_1based": 10,
+          "duplication_length": 3,
+          "duplication_position_0based_nt": 30,
+          "duplicated_amino_acid": "G (Glycine)",
+          "classification": "In-frame tandem duplication - codon 10 (GGA, Glycine) got copied right after itself. Because 3 IS a multiple of 3, the reading frame is NOT disturbed - the protein just gains one extra Glycine in a row, and everything else, including everything downstream, translates identically to the reference."
+        }
+      },
+      "frameshift_mutant": {
+        "nucleotide_sequence": "ATGAAAAAAGGTATTTTTTTCTCTCTATTGGAATAGCTGTTTTGTTTTAA",
+        "duplication_details": {
+          "duplicated_bases": "TT",
+          "duplication_length": 2,
+          "duplication_position_0based_nt": 15,
+          "why_multiple_of_3_matters": "This time only 2 nucleotides ('TT', copied from right before the insertion point) got tandem-duplicated - and 2 is NOT a multiple of 3, so unlike the in-frame example, this duplication shifts every downstream codon boundary, exactly like the insertion in Level 4 - a frameshift."
+        },
+        "new_codons_from_position_1": [
+          "ATG",
+          "AAA",
+          "AAA",
+          "GGT",
+          "ATT",
+          "TTT",
+          "TTC",
+          "TCT",
+          "CTA",
+          "TTG",
+          "GAA",
+          "TAG",
+          "CTG",
+          "TTT",
+          "TGT",
+          "TTT",
+          "AA"
+        ],
+        "new_amino_acid_sequence_until_stop": "MKKGIFFSLLE*"
+      }
+    },
+    "cadF": {
+      "reference": {
+        "nucleotide_sequence": "ATGGATAATCGTTATGCACCAGGTGTTAGACTTGGTTATCATTTTTGA",
+        "amino_acid_sequence": "MDNRYAPGVRLGYHF*",
+        "codons": [
+          "ATG",
+          "GAT",
+          "AAT",
+          "CGT",
+          "TAT",
+          "GCA",
+          "CCA",
+          "GGT",
+          "GTT",
+          "AGA",
+          "CTT",
+          "GGT",
+          "TAT",
+          "CAT",
+          "TTT",
+          "TGA"
+        ]
+      },
+      "inframe_mutant": {
+        "nucleotide_sequence": "ATGGATAATCGTTATGCACCAGGTGTTAGAAGACTTGGTTATCATTTTTGA",
+        "amino_acid_sequence": "MDNRYAPGVRRLGYHF*",
+        "codons": [
+          "ATG",
+          "GAT",
+          "AAT",
+          "CGT",
+          "TAT",
+          "GCA",
+          "CCA",
+          "GGT",
+          "GTT",
+          "AGA",
+          "AGA",
+          "CTT",
+          "GGT",
+          "TAT",
+          "CAT",
+          "TTT",
+          "TGA"
+        ],
+        "duplication_details": {
+          "duplicated_codon": "AGA",
+          "duplicated_codon_number_1based": 10,
+          "duplication_length": 3,
+          "duplication_position_0based_nt": 30,
+          "duplicated_amino_acid": "R (Arginine)",
+          "classification": "In-frame tandem duplication - codon 10 (AGA, Arginine) got copied right after itself. Because 3 IS a multiple of 3, the reading frame is NOT disturbed - the protein just gains one extra Arginine in a row, and everything else, including everything downstream, translates identically to the reference."
+        }
+      },
+      "frameshift_mutant": {
+        "nucleotide_sequence": "ATGGATAATCGTTATATGCACCAGGTGTTAGACTTGGTTATCATTTTTGA",
+        "duplication_details": {
+          "duplicated_bases": "AT",
+          "duplication_length": 2,
+          "duplication_position_0based_nt": 15,
+          "why_multiple_of_3_matters": "This time only 2 nucleotides ('AT', copied from right before the insertion point) got tandem-duplicated - and 2 is NOT a multiple of 3, so unlike the in-frame example, this duplication shifts every downstream codon boundary, exactly like the insertion in Level 4 - a frameshift."
+        },
+        "new_codons_from_position_1": [
+          "ATG",
+          "GAT",
+          "AAT",
+          "CGT",
+          "TAT",
+          "ATG",
+          "CAC",
+          "CAG",
+          "GTG",
+          "TTA",
+          "GAC",
+          "TTG",
+          "GTT",
+          "ATC",
+          "ATT",
+          "TTT",
+          "GA"
+        ],
+        "new_amino_acid_sequence_until_stop": "MDNRYMHQVLDLVIIF"
+      }
+    },
+    "ciaB": {
+      "reference": {
+        "nucleotide_sequence": "ATGAATAATTTTAAAGAAATAGCTAAATTGGTTAGAAAATACAAATAG",
+        "amino_acid_sequence": "MNNFKEIAKLVRKYK*",
+        "codons": [
+          "ATG",
+          "AAT",
+          "AAT",
+          "TTT",
+          "AAA",
+          "GAA",
+          "ATA",
+          "GCT",
+          "AAA",
+          "TTG",
+          "GTT",
+          "AGA",
+          "AAA",
+          "TAC",
+          "AAA",
+          "TAG"
+        ]
+      },
+      "inframe_mutant": {
+        "nucleotide_sequence": "ATGAATAATTTTAAAGAAATAGCTAAATTGTTGGTTAGAAAATACAAATAG",
+        "amino_acid_sequence": "MNNFKEIAKLLVRKYK*",
+        "codons": [
+          "ATG",
+          "AAT",
+          "AAT",
+          "TTT",
+          "AAA",
+          "GAA",
+          "ATA",
+          "GCT",
+          "AAA",
+          "TTG",
+          "TTG",
+          "GTT",
+          "AGA",
+          "AAA",
+          "TAC",
+          "AAA",
+          "TAG"
+        ],
+        "duplication_details": {
+          "duplicated_codon": "TTG",
+          "duplicated_codon_number_1based": 10,
+          "duplication_length": 3,
+          "duplication_position_0based_nt": 30,
+          "duplicated_amino_acid": "L (Leucine)",
+          "classification": "In-frame tandem duplication - codon 10 (TTG, Leucine) got copied right after itself. Because 3 IS a multiple of 3, the reading frame is NOT disturbed - the protein just gains one extra Leucine in a row, and everything else, including everything downstream, translates identically to the reference."
+        }
+      },
+      "frameshift_mutant": {
+        "nucleotide_sequence": "ATGAATAATTTTAAAAAGAAATAGCTAAATTGGTTAGAAAATACAAATAG",
+        "duplication_details": {
+          "duplicated_bases": "AA",
+          "duplication_length": 2,
+          "duplication_position_0based_nt": 15,
+          "why_multiple_of_3_matters": "This time only 2 nucleotides ('AA', copied from right before the insertion point) got tandem-duplicated - and 2 is NOT a multiple of 3, so unlike the in-frame example, this duplication shifts every downstream codon boundary, exactly like the insertion in Level 4 - a frameshift."
+        },
+        "new_codons_from_position_1": [
+          "ATG",
+          "AAT",
+          "AAT",
+          "TTT",
+          "AAA",
+          "AAG",
+          "AAA",
+          "TAG",
+          "CTA",
+          "AAT",
+          "TGG",
+          "TTA",
+          "GAA",
+          "AAT",
+          "ACA",
+          "AAT",
+          "AG"
+        ],
+        "new_amino_acid_sequence_until_stop": "MNNFKKK*"
+      }
+    }
+  },
+  "scoring": {
+    "points_for_locating_the_gap": 20,
+    "points_for_inframe_protein_comparison": 25,
+    "points_for_frameshift_retranslation": 30
+  }
+}

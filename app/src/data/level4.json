@@ -83,6 +83,35 @@
         ],
         "new_amino_acid_sequence_until_stop": "MKKGIRTFSLLE*",
         "classification": "Frameshift (insertion) mutation - codons 1-5 are unaffected, but codon 6 onward is completely different from the reference because the frame has shifted."
+      },
+      "deletion_mutant": {
+        "nucleotide_sequence": "ATGAAAAAAGGTATTTCTCTATTGGAATAGCTGTTTTGTTTTAA",
+        "deletion_details": {
+          "deleted_bases": "TTTC",
+          "deletion_length": 4,
+          "deletion_position_0based_nt": 15,
+          "deletion_position_1based_in_fragment": "after nucleotide 15 (i.e. right after codon 5)",
+          "why_multiple_of_3_matters": "Deletions/insertions of 3 (or a multiple of 3) nucleotides just remove or add whole codons (whole amino acids) and keep the reading frame intact. A deletion of any other length, like 4 here, shifts every downstream codon boundary - a frameshift, just like the insertion you saw earlier, but from the opposite direction (letters MISSING instead of extra)."
+        },
+        "new_codons_from_position_1": [
+          "ATG",
+          "AAA",
+          "AAA",
+          "GGT",
+          "ATT",
+          "TCT",
+          "CTA",
+          "TTG",
+          "GAA",
+          "TAG",
+          "CTG",
+          "TTT",
+          "TGT",
+          "TTT",
+          "AA"
+        ],
+        "new_amino_acid_sequence_until_stop": "MKKGISLLE*",
+        "classification": "Frameshift (deletion) mutation - codons 1-5 are unaffected, but codon 6 onward is completely different from the reference because the frame has shifted (this time because 4 letters are MISSING rather than extra)."
       }
     },
     "cadF": {
@@ -139,6 +168,35 @@
         ],
         "new_amino_acid_sequence_until_stop": "MDNRYRTHQVLDLVIIF",
         "classification": "Frameshift (insertion) mutation - codons 1-5 are unaffected, but codon 6 onward is completely different from the reference because the frame has shifted."
+      },
+      "deletion_mutant": {
+        "nucleotide_sequence": "ATGGATAATCGTTATCAGGTGTTAGACTTGGTTATCATTTTTGA",
+        "deletion_details": {
+          "deleted_bases": "GCAC",
+          "deletion_length": 4,
+          "deletion_position_0based_nt": 15,
+          "deletion_position_1based_in_fragment": "after nucleotide 15 (i.e. right after codon 5)",
+          "why_multiple_of_3_matters": "Deletions/insertions of 3 (or a multiple of 3) nucleotides just remove or add whole codons (whole amino acids) and keep the reading frame intact. A deletion of any other length, like 4 here, shifts every downstream codon boundary - a frameshift, just like the insertion you saw earlier, but from the opposite direction (letters MISSING instead of extra)."
+        },
+        "new_codons_from_position_1": [
+          "ATG",
+          "GAT",
+          "AAT",
+          "CGT",
+          "TAT",
+          "CAG",
+          "GTG",
+          "TTA",
+          "GAC",
+          "TTG",
+          "GTT",
+          "ATC",
+          "ATT",
+          "TTT",
+          "GA"
+        ],
+        "new_amino_acid_sequence_until_stop": "MDNRYQVLDLVIIF",
+        "classification": "Frameshift (deletion) mutation - codons 1-5 are unaffected, but codon 6 onward is completely different from the reference because the frame has shifted (this time because 4 letters are MISSING rather than extra)."
       }
     },
     "ciaB": {
@@ -195,6 +253,35 @@
         ],
         "new_amino_acid_sequence_until_stop": "MNNFKRTK*",
         "classification": "Frameshift (insertion) mutation - codons 1-5 are unaffected, but codon 6 onward is completely different from the reference because the frame has shifted."
+      },
+      "deletion_mutant": {
+        "nucleotide_sequence": "ATGAATAATTTTAAATAGCTAAATTGGTTAGAAAATACAAATAG",
+        "deletion_details": {
+          "deleted_bases": "GAAA",
+          "deletion_length": 4,
+          "deletion_position_0based_nt": 15,
+          "deletion_position_1based_in_fragment": "after nucleotide 15 (i.e. right after codon 5)",
+          "why_multiple_of_3_matters": "Deletions/insertions of 3 (or a multiple of 3) nucleotides just remove or add whole codons (whole amino acids) and keep the reading frame intact. A deletion of any other length, like 4 here, shifts every downstream codon boundary - a frameshift, just like the insertion you saw earlier, but from the opposite direction (letters MISSING instead of extra)."
+        },
+        "new_codons_from_position_1": [
+          "ATG",
+          "AAT",
+          "AAT",
+          "TTT",
+          "AAA",
+          "TAG",
+          "CTA",
+          "AAT",
+          "TGG",
+          "TTA",
+          "GAA",
+          "AAT",
+          "ACA",
+          "AAT",
+          "AG"
+        ],
+        "new_amino_acid_sequence_until_stop": "MNNFK*",
+        "classification": "Frameshift (deletion) mutation - codons 1-5 are unaffected, but codon 6 onward is completely different from the reference because the frame has shifted (this time because 4 letters are MISSING rather than extra)."
       }
     }
   },

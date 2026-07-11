@@ -1,4 +1,5 @@
 import { codonsOf } from '../utils/shuffle';
+import { baseClass } from '../utils/bases';
 
 /** Always-visible reference nucleotide (and optionally amino acid) sequence, shown as a picture to build/compare against. */
 export default function ReferenceStrip({ label, sequence, aminoAcidSequence }) {
@@ -11,7 +12,7 @@ export default function ReferenceStrip({ label, sequence, aminoAcidSequence }) {
         {codons.map((codon, i) => (
           <span key={i} className="reference-codon">
             {codon.split('').map((n, j) => (
-              <span key={j} className="reference-nt">{n}</span>
+              <span key={j} className={'reference-nt ' + baseClass(n)}>{n}</span>
             ))}
           </span>
         ))}

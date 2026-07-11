@@ -4,6 +4,7 @@ import RulesPanel from '../components/RulesPanel';
 import PointsBanner from '../components/PointsBanner';
 import { usePlayer } from '../state/PlayerContext';
 import codonData from '../data/codon_table.json';
+import { baseClass } from '../utils/bases';
 
 const table = codonData.codon_table;
 const AA_OPTIONS = [...new Set(Object.values(table))].sort((a, b) => (a === '*' ? 1 : b === '*' ? -1 : a.localeCompare(b)));
@@ -17,11 +18,17 @@ function groupByCodon(items) {
   return groups;
 }
 
-/** Shared UI for Level 2 (synonymous) and Level 3 (non-synonymous) SNP levels. */
+/**
+ * Shared UI for Level 2 (synonymous SNP), Level 3 (non-synonymous SNP) and Level 6 (a
+ * multi-nucleotide block substitution). All three are the same shape: some set of nucleotide
+ * positions differ from the reference, all within ONE codon, and the player finds every
+ * differing position before that single codon gets re-translated. Levels 2/3 just happen to
+ * have a set of size 1; Level 6's set has size 2 (an MNV) - no other code path needed.
+ */
 export default function MutationLevel({ data, title, levelKey }) {
   const { player, awardPoints } = usePlayer();
   const [stage, setStage] = useState('locate'); // locate -> translate -> compare -> done
-  const [pickedIndex, setPickedIndex] = useState(null);
+  const [foundPositions, setFoundPositions] = useState([]);
   const [wrongPick, setWrongPick] = useState(null);
   const [pickedAA, setPickedAA] = useState(null);
   const [wrongAA, setWrongAA] = useState(null);
@@ -47,17 +54,23 @@ export default function MutationLevel({ data, title, levelKey }) {
 
   const geneKey = player.geneChoice;
   const { reference, mutant } = data.genes[geneKey];
+  const details = mutant.block_substitution_details || mutant.mutation_details;
+  const multi = details.nucleotide_positions_1based_in_fragment
+    ? details.nucleotide_positions_1based_in_fragment.length > 1
+    : false;
 
-  const diffIndex = useMemo(() => {
+  const diffIndices = useMemo(() => {
+    const found = [];
     for (let i = 0; i < reference.nucleotide_sequence.length; i++) {
-      if (reference.nucleotide_sequence[i] !== mutant.nucleotide_sequence[i]) return i;
+      if (reference.nucleotide_sequence[i] !== mutant.nucleotide_sequence[i]) found.push(i);
     }
-    return -1;
+    return found;
   }, [reference, mutant]);
 
-  const aaDiffIndex = Math.floor(diffIndex / 3);
+  const aaDiffIndex = Math.floor(diffIndices[0] / 3);
   const mutantCodon = mutant.codons[aaDiffIndex];
   const correctAA = table[mutantCodon];
+  const allFound = foundPositions.length === diffIndices.length;
 
   function award(key) {
     const total = awardPoints(levelKey, POINTS[key]);
@@ -65,11 +78,14 @@ export default function MutationLevel({ data, title, levelKey }) {
   }
 
   function clickNucleotide(i) {
-    if (stage !== 'locate') return;
-    if (i === diffIndex) {
-      setPickedIndex(i);
-      award('locate');
-      setStage('translate');
+    if (stage !== 'locate' || foundPositions.includes(i)) return;
+    if (diffIndices.includes(i)) {
+      const next = [...foundPositions, i];
+      setFoundPositions(next);
+      if (next.length === diffIndices.length) {
+        award('locate');
+        setStage('translate');
+      }
     } else {
       setWrongPick(i);
       setTimeout(() => setWrongPick(null), 500);
@@ -95,17 +111,18 @@ export default function MutationLevel({ data, title, levelKey }) {
         You've been handed an unlabeled DNA sample based on <strong>{geneKey}</strong> — the game won't
         tell you up front whether it matches the reference exactly or carries a mutation. Compare it against
         the reference below to find out.
+        {multi && ' This sample has more than one nucleotide changed together, in the same codon — find all of them before moving on.'}
       </p>
 
       <RulesPanel rules={data.rules} />
       <CodonTable />
 
       <div className="compare-panel">
-        <h3>Step 1 — Find the changed nucleotide</h3>
+        <h3>Step 1 — Find the changed nucleotide{multi ? 's' : ''}</h3>
         <p className="hint">
           {stage === 'locate'
-            ? 'Click the nucleotide in YOUR SAMPLE row below that differs from the reference.'
-            : 'Found it — the highlighted position is where the sample differs from the reference.'}
+            ? `Click the nucleotide${multi ? `s (${foundPositions.length}/${diffIndices.length} found)` : ''} in YOUR SAMPLE row below that differ${multi ? '' : 's'} from the reference.`
+            : `Found ${multi ? 'them' : 'it'} — the highlighted position${multi ? 's are' : ' is'} where the sample differs from the reference.`}
         </p>
         <div className="diff-view">
           <div className="diff-row">
@@ -114,7 +131,8 @@ export default function MutationLevel({ data, title, levelKey }) {
               <span key={ci} className="diff-codon-group">
                 {codon.map((c, j) => {
                   const i = ci * 3 + j;
-                  return <span key={i} className={'diff-nt' + (i === pickedIndex ? ' diff-highlight' : '')}>{c}</span>;
+                  const isFound = foundPositions.includes(i) || (allFound && diffIndices.includes(i));
+                  return <span key={i} className={'diff-nt ' + baseClass(c) + (isFound ? ' diff-highlight' : '')}>{c}</span>;
                 })}
               </span>
             ))}
@@ -125,12 +143,13 @@ export default function MutationLevel({ data, title, levelKey }) {
               <span key={ci} className="diff-codon-group">
                 {codon.map((c, j) => {
                   const i = ci * 3 + j;
+                  const isFound = foundPositions.includes(i) || (allFound && diffIndices.includes(i));
                   return (
                     <button
                       key={i}
                       className={
-                        'diff-nt diff-nt-clickable' +
-                        (i === pickedIndex ? ' diff-highlight' : '') +
+                        'diff-nt diff-nt-clickable ' + baseClass(c) +
+                        (isFound ? ' diff-highlight' : '') +
                         (i === wrongPick ? ' diff-wrong' : '')
                       }
                       disabled={stage !== 'locate'}
@@ -144,11 +163,12 @@ export default function MutationLevel({ data, title, levelKey }) {
             ))}
           </div>
         </div>
-        {pickedIndex !== null && (
+        {foundPositions.length > 0 && (
           <p className="hint">
-            DNA difference found at position {pickedIndex + 1} (codon #{aaDiffIndex + 1}): reference has{' '}
-            <strong>{reference.nucleotide_sequence[pickedIndex]}</strong>, sample has{' '}
-            <strong>{mutant.nucleotide_sequence[pickedIndex]}</strong>.
+            DNA difference{multi ? 's' : ''} found at position{multi ? 's' : ''}{' '}
+            {[...foundPositions].sort((a, b) => a - b).map((i) => i + 1).join(', ')} (codon #{aaDiffIndex + 1}): reference has{' '}
+            <strong>{[...foundPositions].sort((a, b) => a - b).map((i) => reference.nucleotide_sequence[i]).join('')}</strong>, sample has{' '}
+            <strong>{[...foundPositions].sort((a, b) => a - b).map((i) => mutant.nucleotide_sequence[i]).join('')}</strong>.
           </p>
         )}
       </div>
@@ -216,13 +236,13 @@ export default function MutationLevel({ data, title, levelKey }) {
             <div className="mutation-reveal">
               <table className="detail-table">
                 <tbody>
-                  <tr><td>Codon changed</td><td>#{mutant.mutation_details.codon_number_1based}</td></tr>
-                  <tr><td>Reference codon</td><td>{mutant.mutation_details.reference_codon} → {mutant.mutation_details.reference_amino_acid}</td></tr>
-                  <tr><td>Mutant codon</td><td>{mutant.mutation_details.mutant_codon} → {mutant.mutation_details.mutant_amino_acid}</td></tr>
-                  <tr><td>Change</td><td>{mutant.mutation_details.change}</td></tr>
+                  <tr><td>Codon changed</td><td>#{details.codon_number_1based}</td></tr>
+                  <tr><td>Reference codon</td><td>{details.reference_codon} → {details.reference_amino_acid}</td></tr>
+                  <tr><td>Mutant codon</td><td>{details.mutant_codon} → {details.mutant_amino_acid}</td></tr>
+                  <tr><td>Change</td><td>{details.change}</td></tr>
                 </tbody>
               </table>
-              <p className="classification">{mutant.mutation_details.classification}</p>
+              <p className="classification">{details.classification}</p>
             </div>
           )}
         </div>

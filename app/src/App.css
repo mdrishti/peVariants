@@ -1,3 +1,17 @@
+:root {
+  /* Nucleotide letter colors — classic theme leaves these neutral (inherit), so .nt-base is a no-op here. */
+  --nt-a: inherit;
+  --nt-c: inherit;
+  --nt-g: inherit;
+  --nt-t: inherit;
+}
+
+.nt-base { }
+.nt-A { color: var(--nt-a); }
+.nt-C { color: var(--nt-c); }
+.nt-G { color: var(--nt-g); }
+.nt-T { color: var(--nt-t); }
+
 .app-shell {
   max-width: 900px;
   margin: 0 auto;
@@ -5,8 +19,21 @@
   font-family: system-ui, sans-serif;
 }
 
+.header-row { display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
 header h1 { margin-bottom: 0.25rem; }
 .subtitle { color: #666; margin-top: 0; }
+
+.theme-toggle {
+  padding: 0.4rem 0.8rem;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  background: #fff;
+  color: #333;
+  cursor: pointer;
+  font-size: 0.85rem;
+  white-space: nowrap;
+}
+.theme-toggle:hover { background: #f2f2f2; }
 
 .app-footer {
   margin-top: 2.5rem;
@@ -96,7 +123,9 @@ header h1 { margin-bottom: 0.25rem; }
 .codon-col { display: flex; flex-direction: column; align-items: center; gap: 0.2rem; }
 .codon-label { font-size: 0.7rem; color: #666; font-family: monospace; }
 .amino-slot { background: #d9c9ff; cursor: default; }
-.codon-col-disabled .codon-label { opacity: 0.4; }
+/* codon-col-disabled intentionally does NOT dim .codon-label further - the dashed empty slot
+   below it already signals "disabled"; stacking opacity/color fades on top of the label's
+   already-muted #666 produced illegibly low-contrast text. */
 .amino-slot.disabled { background: #f0f0f0; border: 1px dashed #ccc; cursor: default; }
 
 .builder-controls {
@@ -141,14 +170,20 @@ header h1 { margin-bottom: 0.25rem; }
 .diff-nt-clickable:disabled { cursor: default; }
 .diff-nt-clickable:not(:disabled):hover { background: #f0f0f0; }
 .diff-wrong { background: #f8c4c4 !important; outline: 2px solid #d1414a; }
+/* "Blank"/"echo"/"dim" cells all mark de-emphasized content, but must stay legible - none of
+   them use opacity (which fades text AND background together into illegibility); each pairs a
+   light background/dashed border with a solid, adequately-contrasting text color instead. */
 .diff-blank {
   border: 1px dashed #999;
   background: #f7f7f7;
-  color: #999;
+  color: #767676;
 }
-.diff-dim { opacity: 0.5; }
+.diff-dim {
+  border: 1px dashed #bbb;
+  background: #f2f2f2;
+}
 .diff-echo {
-  color: #999;
+  color: #767676;
   font-size: 0.7rem;
   border: 1px dashed #ccc;
   background: #f7f7f7;
@@ -163,7 +198,7 @@ header h1 { margin-bottom: 0.25rem; }
 }
 .diff-aa-codon {
   font-size: 0.6rem;
-  color: #888;
+  color: #767676;
   font-family: monospace;
   letter-spacing: 0.02em;
 }
@@ -180,8 +215,7 @@ header h1 { margin-bottom: 0.25rem; }
   border: 1px solid #ddd;
 }
 .diff-aa-col.diff-highlight .diff-aa-letter { background: #ffe08a; outline: 2px solid #d1971a; border-color: transparent; }
-.diff-aa-col.diff-aa-disabled .diff-aa-codon { opacity: 0.4; }
-.diff-aa-col.diff-aa-disabled .diff-aa-letter { border: 1px dashed #ccc; background: #f7f7f7; opacity: 0.5; }
+.diff-aa-col.diff-aa-disabled .diff-aa-letter { border: 1px dashed #ccc; background: #f7f7f7; }
 .diff-aa-col.diff-aa-disabled.diff-highlight .diff-aa-letter { background: #f7f7f7; outline: none; border: 1px dashed #ccc; }
 
 .aa-picker { margin-top: 0.75rem; }
@@ -222,7 +256,7 @@ header h1 { margin-bottom: 0.25rem; }
 .toggle:hover { background: #3d3b57; }
 .toggle.selected { background: #4b3fd6; color: white; border-color: #4b3fd6; }
 
-.empty-hint { color: #999; font-style: italic; }
+.empty-hint { color: #767676; font-style: italic; }
 .hint { color: #555; }
 
 .rules-panel {
@@ -482,3 +516,94 @@ header h1 { margin-bottom: 0.25rem; }
   font-size: 1rem;
   cursor: pointer;
 }
+
+/* ============================================================
+   "Alignment" theme — styled after real sequence-alignment viewers
+   (BLAST/Jalview/genome-browser conventions): monospace throughout,
+   parchment background, dark toolbar chrome, and the standard
+   A/T/G/C letter-color convention used across sequence-viewing tools.
+   Scoped entirely under .theme-alignment so switching back to
+   .theme-classic (the original look) fully reverts everything.
+   ============================================================ */
+.theme-alignment {
+  --nt-a: #2e7d32;
+  --nt-c: #1565c0;
+  --nt-g: #262626;
+  --nt-t: #c62828;
+
+  font-family: 'SF Mono', ui-monospace, Menlo, Consolas, 'Courier New', monospace;
+  background: #f3efe0;
+  color: #2a2a26;
+  padding: 1.5rem;
+  border: 1px solid #ddd4b8;
+  border-radius: 4px;
+}
+
+.theme-alignment header {
+  background: #20262b;
+  color: #e8e6df;
+  margin: -1.5rem -1.5rem 1.5rem;
+  padding: 1rem 1.5rem;
+  border-radius: 4px 4px 0 0;
+}
+.theme-alignment header h1 { font-size: 1.3rem; letter-spacing: 0.02em; }
+.theme-alignment .subtitle { color: #a9b0a6; }
+.theme-alignment .theme-toggle { background: #2f373d; color: #e8e6df; border-color: #454f57; }
+.theme-alignment .theme-toggle:hover { background: #3b444b; }
+
+.theme-alignment .level-btn { background: #e4e0cd; color: #2a2a26; border-radius: 3px; }
+.theme-alignment .level-btn:hover { background: #d8d3ba; border-color: #8a7d4f; }
+.theme-alignment .level-btn.active { background: #8a7d4f; color: #fff; border-color: #5f552f; }
+
+.theme-alignment .compare-panel,
+.theme-alignment .rules-panel,
+.theme-alignment .mutation-effects-card,
+.theme-alignment .celebrate,
+.theme-alignment .reference-strip,
+.theme-alignment .player-bar,
+.theme-alignment .points-banner,
+.theme-alignment .gene-picker.locked,
+.theme-alignment .codon-table-panel {
+  background: #fffdf6;
+  border: 1px solid #ddd4b8;
+  border-radius: 3px;
+  padding: 0.75rem 1rem;
+}
+.theme-alignment .rules-panel { border-left: 3px solid #8a7d4f; }
+.theme-alignment .mutation-effects-card { border-left: 3px solid #b5551f; }
+.theme-alignment .celebrate { border-left: 3px solid #2e7d32; }
+.theme-alignment .points-banner { border-left: 3px solid #b5551f; }
+
+.theme-alignment .diff-label { font-family: inherit; color: #6b6552; }
+.theme-alignment .diff-codon-group { border-color: #ddd4b8; }
+.theme-alignment .diff-nt { background: #fffdf6; }
+.theme-alignment .diff-nt-clickable { background: #fffdf6; border-color: #c9bf9c; }
+.theme-alignment .diff-nt-clickable:not(:disabled):hover { background: #efe9d3; }
+.theme-alignment .diff-highlight { background: #fbe9b0; outline-color: #8a7d4f; }
+.theme-alignment .diff-blank { background: #ece6d2; border-color: #b8ac82; color: #5c5540; }
+.theme-alignment .diff-echo { background: #ece6d2; border-color: #b8ac82; color: #5c5540; }
+.theme-alignment .diff-dim { background: #ece6d2; border-color: #b8ac82; }
+.theme-alignment .diff-aa-codon { color: #6b6552; }
+
+.theme-alignment .tile, .theme-alignment .slot { background: #fffdf6; border-color: #c9bf9c; }
+.theme-alignment .tile.amino { background: #e4e0cd; }
+.theme-alignment .amino-slot { background: #e4e0cd; }
+
+.theme-alignment .reference-strip-label { color: #8a7d4f; }
+.theme-alignment .reference-nt { background: #fffdf6; }
+.theme-alignment .reference-codon { border-color: #c9bf9c; }
+.theme-alignment .reference-aa { background: #e4e0cd; }
+
+.theme-alignment .codon-table-grid { background: #20262b; }
+.theme-alignment .collapse-toggle { color: #8a7d4f; }
+
+.theme-alignment .gap-codon { background: #fffdf6; border-color: #c9bf9c; }
+.theme-alignment .gap-btn { background: #e4e0cd; }
+.theme-alignment .gap-btn:hover { background: #d8d3ba; color: #8a7d4f; }
+
+.theme-alignment .toggle { background: #20262b; border-color: #20262b; }
+.theme-alignment .toggle.selected { background: #8a7d4f; border-color: #8a7d4f; }
+
+.theme-alignment .classification { background: #eef3ea; }
+
+.theme-alignment .app-footer { border-top-color: #ddd4b8; }

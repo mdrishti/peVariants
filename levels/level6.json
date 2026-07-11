@@ -1,0 +1,215 @@
+{
+  "level": 6,
+  "title": "Multiple Letters at Once (Block Substitution / MNV)",
+  "learning_goal": "Learn that a real mutational event can replace SEVERAL CONSECUTIVE nucleotides at the same time in a single codon - a multi-nucleotide variant (MNV) or 'block substitution' - rather than just one letter (a SNP, as in Levels 2-3). This is a real, if less common, class of variant seen in real sequencing data, and it usually has a bigger effect on the amino acid than a single-letter change because more of the codon's identity changes at once.",
+  "rules": [
+    "You'll work with whichever gene you chose in Level 1 - your choice carries over automatically.",
+    "This sample has TWO CONSECUTIVE nucleotides changed together, in the same codon, as a single block substitution - not one isolated letter like Levels 2-3.",
+    "Click each of the 2 changed nucleotides in the sample row (in either order) to find the whole block before moving on.",
+    "Both letters belong to the SAME codon, so there is only one codon - and one amino acid - to re-translate afterward.",
+    "Changing 2 letters of a codon at once usually changes the amino acid, since far fewer codon pairs happen to share an amino acid than single-letter neighbors do."
+  ],
+  "materials_provided": [
+    "The codon table",
+    "The reference (known/healthy) nucleotide sequence and full amino acid sequence, shown on screen the whole time",
+    "Your sample's full nucleotide sequence, shown alongside the reference so you can click to locate BOTH changed nucleotides in the block",
+    "An amino acid picker (all 20 amino acids plus the '*' STOP symbol) to fill in the blanked codon once you've found the whole block"
+  ],
+  "instructions": [
+    "1. Compare the reference DNA row against your sample DNA row and click BOTH nucleotides that differ - they sit right next to each other, in the same codon.",
+    "2. Once both are found, that codon is revealed as a blank in your protein row. Look up the changed codon in the codon table and click the amino acid you think it now codes for.",
+    "3. Compare your completed protein row against the reference protein row.",
+    "4. The reveal explains the block substitution: which two letters changed together, and whether the resulting amino acid is the same or different."
+  ],
+  "genes": {
+    "jlpA": {
+      "reference": {
+        "nucleotide_sequence": "ATGAAAAAAGGTATTTTTCTCTCTATTGGAATAGCTGTTTTGTTTTAA",
+        "amino_acid_sequence": "MKKGIFLSIGIAVLF*",
+        "codons": [
+          "ATG",
+          "AAA",
+          "AAA",
+          "GGT",
+          "ATT",
+          "TTT",
+          "CTC",
+          "TCT",
+          "ATT",
+          "GGA",
+          "ATA",
+          "GCT",
+          "GTT",
+          "TTG",
+          "TTT",
+          "TAA"
+        ]
+      },
+      "mutant": {
+        "nucleotide_sequence": "ATGAAAAAAGGTATTTTTAGCTCTATTGGAATAGCTGTTTTGTTTTAA",
+        "amino_acid_sequence": "MKKGIFSSIGIAVLF*",
+        "codons": [
+          "ATG",
+          "AAA",
+          "AAA",
+          "GGT",
+          "ATT",
+          "TTT",
+          "AGC",
+          "TCT",
+          "ATT",
+          "GGA",
+          "ATA",
+          "GCT",
+          "GTT",
+          "TTG",
+          "TTT",
+          "TAA"
+        ],
+        "block_substitution_details": {
+          "nucleotide_positions_1based_in_fragment": [
+            19,
+            20
+          ],
+          "codon_number_1based": 7,
+          "reference_bases": "CT",
+          "mutant_bases": "AG",
+          "reference_codon": "CTC",
+          "mutant_codon": "AGC",
+          "reference_amino_acid": "L (Leucine)",
+          "mutant_amino_acid": "S (Serine)",
+          "change": "CT -> AG at positions 1-2 of codon 7 (both letters changed together, in the same mutational event)",
+          "classification": "Non-synonymous (missense) block substitution - CTC (Leucine) becomes AGC (Serine), so the protein changes at position 7."
+        }
+      }
+    },
+    "cadF": {
+      "reference": {
+        "nucleotide_sequence": "ATGGATAATCGTTATGCACCAGGTGTTAGACTTGGTTATCATTTTTGA",
+        "amino_acid_sequence": "MDNRYAPGVRLGYHF*",
+        "codons": [
+          "ATG",
+          "GAT",
+          "AAT",
+          "CGT",
+          "TAT",
+          "GCA",
+          "CCA",
+          "GGT",
+          "GTT",
+          "AGA",
+          "CTT",
+          "GGT",
+          "TAT",
+          "CAT",
+          "TTT",
+          "TGA"
+        ]
+      },
+      "mutant": {
+        "nucleotide_sequence": "ATGGATAATCGTTATGCAAGAGGTGTTAGACTTGGTTATCATTTTTGA",
+        "amino_acid_sequence": "MDNRYARGVRLGYHF*",
+        "codons": [
+          "ATG",
+          "GAT",
+          "AAT",
+          "CGT",
+          "TAT",
+          "GCA",
+          "AGA",
+          "GGT",
+          "GTT",
+          "AGA",
+          "CTT",
+          "GGT",
+          "TAT",
+          "CAT",
+          "TTT",
+          "TGA"
+        ],
+        "block_substitution_details": {
+          "nucleotide_positions_1based_in_fragment": [
+            19,
+            20
+          ],
+          "codon_number_1based": 7,
+          "reference_bases": "CC",
+          "mutant_bases": "AG",
+          "reference_codon": "CCA",
+          "mutant_codon": "AGA",
+          "reference_amino_acid": "P (Proline)",
+          "mutant_amino_acid": "R (Arginine)",
+          "change": "CC -> AG at positions 1-2 of codon 7 (both letters changed together, in the same mutational event)",
+          "classification": "Non-synonymous (missense) block substitution - CCA (Proline) becomes AGA (Arginine), so the protein changes at position 7."
+        }
+      }
+    },
+    "ciaB": {
+      "reference": {
+        "nucleotide_sequence": "ATGAATAATTTTAAAGAAATAGCTAAATTGGTTAGAAAATACAAATAG",
+        "amino_acid_sequence": "MNNFKEIAKLVRKYK*",
+        "codons": [
+          "ATG",
+          "AAT",
+          "AAT",
+          "TTT",
+          "AAA",
+          "GAA",
+          "ATA",
+          "GCT",
+          "AAA",
+          "TTG",
+          "GTT",
+          "AGA",
+          "AAA",
+          "TAC",
+          "AAA",
+          "TAG"
+        ]
+      },
+      "mutant": {
+        "nucleotide_sequence": "ATGAATAATTTTAAAGAAGCAGCTAAATTGGTTAGAAAATACAAATAG",
+        "amino_acid_sequence": "MNNFKEAAKLVRKYK*",
+        "codons": [
+          "ATG",
+          "AAT",
+          "AAT",
+          "TTT",
+          "AAA",
+          "GAA",
+          "GCA",
+          "GCT",
+          "AAA",
+          "TTG",
+          "GTT",
+          "AGA",
+          "AAA",
+          "TAC",
+          "AAA",
+          "TAG"
+        ],
+        "block_substitution_details": {
+          "nucleotide_positions_1based_in_fragment": [
+            19,
+            20
+          ],
+          "codon_number_1based": 7,
+          "reference_bases": "AT",
+          "mutant_bases": "GC",
+          "reference_codon": "ATA",
+          "mutant_codon": "GCA",
+          "reference_amino_acid": "I (Isoleucine)",
+          "mutant_amino_acid": "A (Alanine)",
+          "change": "AT -> GC at positions 1-2 of codon 7 (both letters changed together, in the same mutational event)",
+          "classification": "Non-synonymous (missense) block substitution - ATA (Isoleucine) becomes GCA (Alanine), so the protein changes at position 7."
+        }
+      }
+    }
+  },
+  "scoring": {
+    "points_per_correct_placement": 1,
+    "points_for_locating_the_full_block": 20,
+    "points_for_correctly_translating_the_codon": 20,
+    "points_for_final_classification": 30
+  }
+}

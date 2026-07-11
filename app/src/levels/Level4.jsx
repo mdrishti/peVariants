@@ -6,47 +6,40 @@ import RulesPanel from '../components/RulesPanel';
 import PointsBanner from '../components/PointsBanner';
 import { usePlayer } from '../state/PlayerContext';
 import data from '../data/level4.json';
+import { baseClass } from '../utils/bases';
+import { groupByCodon, buildGapAlignment } from '../utils/indelAlignment';
 
 const BASES = ['A', 'C', 'G', 'T'];
 
-/** Splits a flat string into groups of 3 characters (one per codon) for rendering. */
-function groupByCodon(str) {
-  const groups = [];
-  for (let i = 0; i < str.length; i += 3) groups.push(str.slice(i, i + 3).split(''));
-  return groups;
-}
-
 /**
- * Builds the REFERENCE row's codon boxes so they line up, box for box, with the mutant row's
- * codon boxes (which are just the mutant sequence chunked into 3s from position 0). Works for
- * any insertion length, not just multiples of 3 - generalizes to any future gene/insertion:
- *  - codons entirely before the insertion point are shown untouched.
- *  - the insertion itself needs ceil(insertLength / 3) boxes to match the mutant row's box count
- *    (since the reference is shorter by insertLength nt); any of those box's 3 slots left over
- *    once the pure-insertion letters run out are "borrowed" from the reference's own next codon
- *    (shown dim, in parentheses) purely so the two rows' boxes stay the same width.
- *  - codons from the insertion point onward are then shown again in full, untouched, since none
- *    of them were consumed (the borrowed slots above were just a preview of this same codon).
+ * Normalizes a gene's insertion or deletion data into one shape, so the rest of the level
+ * (box-alignment, codon re-assignment, effects card) doesn't need to branch on type at all.
  */
-function buildReferenceGapBoxes(reference, correctGapIndex, insertStart, insertLength) {
-  const before = reference.codons.slice(0, correctGapIndex).map((c) => c.split(''));
-  const numGapBoxes = Math.ceil(insertLength / 3);
-  const gapBoxes = [];
-  for (let b = 0; b < numGapBoxes; b++) {
-    const box = [];
-    for (let slot = 0; slot < 3; slot++) {
-      const cum = b * 3 + slot;
-      if (cum < insertLength) {
-        box.push({ blank: true });
-      } else {
-        const refIdx = insertStart + (cum - insertLength);
-        box.push({ echo: true, letter: reference.nucleotide_sequence[refIdx] });
-      }
-    }
-    gapBoxes.push(box);
+function normalizeVariant(gene, mutationType) {
+  if (mutationType === 'insertion') {
+    const m = gene.mutant;
+    return {
+      type: 'insertion',
+      nucleotideSequence: m.nucleotide_sequence,
+      editStart: m.insertion_details.insertion_position_0based_nt,
+      editLength: m.insertion_details.insertion_length,
+      editedBases: m.insertion_details.inserted_bases,
+      whyMultipleOf3Matters: m.insertion_details.why_multiple_of_3_matters,
+      newCodons: m.new_codons_from_position_1,
+      newAminoAcidSequenceUntilStop: m.new_amino_acid_sequence_until_stop,
+    };
   }
-  const after = reference.codons.slice(correctGapIndex).map((c) => c.split(''));
-  return { before, gapBoxes, after, numGapBoxes };
+  const m = gene.deletion_mutant;
+  return {
+    type: 'deletion',
+    nucleotideSequence: m.nucleotide_sequence,
+    editStart: m.deletion_details.deletion_position_0based_nt,
+    editLength: m.deletion_details.deletion_length,
+    editedBases: m.deletion_details.deleted_bases,
+    whyMultipleOf3Matters: m.deletion_details.why_multiple_of_3_matters,
+    newCodons: m.new_codons_from_position_1,
+    newAminoAcidSequenceUntilStop: m.new_amino_acid_sequence_until_stop,
+  };
 }
 
 /** Wordle-style per-letter scoring: 'correct' (right letter, right spot), 'present' (right letter, wrong spot), 'absent'. */
@@ -73,6 +66,7 @@ function scoreGuess(guess, answer) {
 
 export default function Level4() {
   const { player, awardPoints } = usePlayer();
+  const [mutationType, setMutationType] = useState('insertion');
   const [stage, setStage] = useState('locate'); // locate | insert-order | confirm | assign | effects | orf
   const [guesses, setGuesses] = useState([]);
   const [banner, setBanner] = useState(null);
@@ -81,7 +75,7 @@ export default function Level4() {
   if (!player) {
     return (
       <div className="level">
-        <h2>Level 4 — The Extra Letters (Insertion / Frameshift)</h2>
+        <h2>Level 4 — Extra or Missing Letters (Indel / Frameshift)</h2>
         <p className="hint">Register a player name above to start earning points.</p>
       </div>
     );
@@ -90,27 +84,37 @@ export default function Level4() {
   if (!player.geneChoice) {
     return (
       <div className="level">
-        <h2>Level 4 — The Extra Letters (Insertion / Frameshift)</h2>
+        <h2>Level 4 — Extra or Missing Letters (Indel / Frameshift)</h2>
         <p className="hint">Pick a gene in Level 1 first — this level continues with that same gene.</p>
       </div>
     );
   }
 
   const geneKey = player.geneChoice;
-  const { reference, mutant } = data.genes[geneKey];
+  const gene = data.genes[geneKey];
+  const { reference } = gene;
   const codons = reference.codons;
-  const correctGapIndex = mutant.insertion_details.insertion_position_0based_nt / 3;
-  const frameshiftAaLength = mutant.new_amino_acid_sequence_until_stop.length;
-  const hitPrematureStop = mutant.new_amino_acid_sequence_until_stop.endsWith('*');
-  const insertLength = mutant.insertion_details.insertion_length;
-  const insertStart = mutant.insertion_details.insertion_position_0based_nt;
-  const { before: refBefore, gapBoxes, after: refAfter, numGapBoxes } = buildReferenceGapBoxes(
+  const variant = normalizeVariant(gene, mutationType);
+  const isInsertion = mutationType === 'insertion';
+  const correctGapIndex = variant.editStart / 3;
+  const frameshiftAaLength = variant.newAminoAcidSequenceUntilStop.length;
+  const hitPrematureStop = variant.newAminoAcidSequenceUntilStop.endsWith('*');
+  const { before: gapSideBefore, gapBoxes, after: gapSideAfter, numGapBoxes } = buildGapAlignment(
     reference,
     correctGapIndex,
-    insertStart,
-    insertLength
+    variant.editLength,
+    mutationType
   );
-  const mutGroups = groupByCodon(mutant.nucleotide_sequence);
+  const plainSideGroups = groupByCodon(isInsertion ? variant.nucleotideSequence : reference.nucleotide_sequence);
+
+  function switchMutationType(next) {
+    if (next === mutationType) return;
+    setMutationType(next);
+    setStage('locate');
+    setGuesses([]);
+    setBuiltAminoAcids('');
+    setBanner(null);
+  }
 
   function award(points) {
     const total = awardPoints('level4', points);
@@ -122,7 +126,7 @@ export default function Level4() {
       setGuesses([...guesses, { gapIndex, result: 'correct' }]);
       const guessCount = guesses.length + 1;
       award(guessCount <= 2 ? 25 : 15);
-      setStage('insert-order');
+      setStage(isInsertion ? 'insert-order' : 'confirm');
       return;
     }
     const result = gapIndex < correctGapIndex ? 'later' : 'earlier';
@@ -133,11 +137,25 @@ export default function Level4() {
 
   return (
     <div className="level">
-      <h2>Level 4 — The Extra Letters (Insertion / Frameshift)</h2>
-      <p>
-        This pile has <strong>{mutant.nucleotide_sequence.length} tiles</strong> — 5 more than the
-        reference gene ({reference.nucleotide_sequence.length} nt).
-      </p>
+      <h2>Level 4 — Extra or Missing Letters (Indel / Frameshift)</h2>
+
+      <div className="quiz-row" style={{ marginBottom: '0.75rem' }}>
+        <span>Explore:</span>
+        <button className={'toggle' + (isInsertion ? ' selected' : '')} onClick={() => switchMutationType('insertion')}>Insertion (extra letters)</button>
+        <button className={'toggle' + (!isInsertion ? ' selected' : '')} onClick={() => switchMutationType('deletion')}>Deletion (missing letters)</button>
+      </div>
+
+      {isInsertion ? (
+        <p>
+          This pile has <strong>{variant.nucleotideSequence.length} tiles</strong> — {variant.editLength} more than the
+          reference gene ({reference.nucleotide_sequence.length} nt).
+        </p>
+      ) : (
+        <p>
+          This pile has only <strong>{variant.nucleotideSequence.length} tiles</strong> — {variant.editLength} fewer than the
+          reference gene ({reference.nucleotide_sequence.length} nt).
+        </p>
+      )}
 
       <RulesPanel rules={data.rules} />
       <CodonTable />
@@ -148,11 +166,14 @@ export default function Level4() {
       />
 
       <div className="compare-panel">
-        <h3>Where were the 5 extra tiles inserted?</h3>
+        <h3>Where were the {variant.editLength} {isInsertion ? 'extra' : 'missing'} letters {isInsertion ? 'inserted' : 'deleted'}?</h3>
         {stage === 'locate' ? (
-          <p className="hint">Click a gap between reference codons to test your guess. The game will tell you if the real insertion point is earlier or later in the sequence.</p>
+          <p className="hint">
+            Click a gap between reference codons to test your guess. The game will tell you if the real
+            {isInsertion ? ' insertion' : ' deletion'} point is earlier or later in the sequence.
+          </p>
         ) : (
-          <p className="result-ok">✓ Found it — the insertion happened right after codon {correctGapIndex} (marked below).</p>
+          <p className="result-ok">✓ Found it — the {isInsertion ? 'insertion' : 'deletion'} happened right after codon {correctGapIndex} (marked below).</p>
         )}
         <div className="gap-row">
           {Array.from({ length: codons.length + 1 }).map((_, gapIndex) => {
@@ -174,21 +195,21 @@ export default function Level4() {
         </div>
         {stage === 'locate' && lastGuess && lastGuess.result !== 'correct' && (
           <p className="result-bad">
-            Not quite — the real insertion point is {lastGuess.result} in the sequence. Try again. ({guesses.length} guess{guesses.length === 1 ? '' : 'es'} so far)
+            Not quite — the real {isInsertion ? 'insertion' : 'deletion'} point is {lastGuess.result} in the sequence. Try again. ({guesses.length} guess{guesses.length === 1 ? '' : 'es'} so far)
           </p>
         )}
       </div>
 
       {stage === 'insert-order' && (
         <div className="compare-panel">
-          <h3>Vardle — guess the 5 inserted letters</h3>
+          <h3>Vardle — guess the {variant.editLength} inserted letters</h3>
           <p className="hint">
-            These 5 nucleotides were found at that gap, but you don't know their order yet. Guess a
-            5-letter A/C/G/T sequence — after each guess, each letter is marked green (right base, right
+            These {variant.editLength} nucleotides were found at that gap, but you don't know their order yet. Guess an
+            {variant.editLength}-letter A/C/G/T sequence — after each guess, each letter is marked green (right base, right
             spot), yellow (right base, wrong spot), or grey (not in the inserted sequence at all), same as Wordle.
           </p>
           <Vardle
-            answer={mutant.insertion_details.inserted_bases}
+            answer={variant.editedBases}
             onSolved={() => {
               award(15);
               setStage('confirm');
@@ -200,44 +221,88 @@ export default function Level4() {
       {(stage === 'confirm' || stage === 'assign' || stage === 'effects' || stage === 'orf') && (
         <div className="compare-panel">
           <h3>Full assembled sample sequence — aligned to the reference</h3>
-          <p className="hint">
-            The reference row keeps its own original codons exactly as in Level 1 — nothing is renumbered.
-            Where your sample carries the {insertLength} extra letters, the reference shows a blank instead;
-            any dim, parenthesized letter is just a preview of the very next reference codon (shown again in full
-            right after), included only so the two rows' boxes line up one-for-one.
-          </p>
+          {isInsertion ? (
+            <p className="hint">
+              The reference row keeps its own original codons exactly as in Level 1 — nothing is renumbered.
+              Where your sample carries the {variant.editLength} extra letters, the reference shows a blank instead;
+              any dim, parenthesized letter is just a preview of the very next reference codon (shown again in full
+              right after), included only so the two rows' boxes line up one-for-one.
+            </p>
+          ) : (
+            <p className="hint">
+              The reference row shows its own original codons, untouched. Your sample is missing {variant.editLength} letters,
+              so its row shows a blank there instead; any dim letter is real sample sequence — it's just pulled forward from
+              right after the gap purely so the two rows' boxes line up one-for-one.
+            </p>
+          )}
           <div className="diff-view">
             <div className="diff-row">
               <span className="diff-label">Reference ({reference.nucleotide_sequence.length}nt)</span>
-              {refBefore.map((codon, gi) => (
-                <span key={`b${gi}`} className="diff-codon-group">
-                  {codon.map((c, j) => <span key={j} className="diff-nt">{c}</span>)}
-                </span>
-              ))}
-              {gapBoxes.map((box, gi) => (
-                <span key={`g${gi}`} className="diff-codon-group">
-                  {box.map((cell, j) => (
-                    <span key={j} className={'diff-nt' + (cell.blank ? ' diff-blank' : ' diff-echo')}>
-                      {cell.blank ? '-' : '(-)'}
+              {isInsertion ? (
+                <>
+                  {gapSideBefore.map((codon, gi) => (
+                    <span key={`b${gi}`} className="diff-codon-group">
+                      {codon.map((c, j) => <span key={j} className={'diff-nt ' + baseClass(c)}>{c}</span>)}
                     </span>
                   ))}
-                </span>
-              ))}
-              {refAfter.map((codon, gi) => (
-                <span key={`a${gi}`} className="diff-codon-group">
-                  {codon.map((c, j) => <span key={j} className="diff-nt">{c}</span>)}
-                </span>
-              ))}
+                  {gapBoxes.map((box, gi) => (
+                    <span key={`g${gi}`} className="diff-codon-group">
+                      {box.map((cell, j) => (
+                        <span key={j} className={'diff-nt' + (cell.blank ? ' diff-blank' : ' diff-echo')}>
+                          {cell.blank ? '-' : '(-)'}
+                        </span>
+                      ))}
+                    </span>
+                  ))}
+                  {gapSideAfter.map((codon, gi) => (
+                    <span key={`a${gi}`} className="diff-codon-group">
+                      {codon.map((c, j) => <span key={j} className={'diff-nt ' + baseClass(c)}>{c}</span>)}
+                    </span>
+                  ))}
+                </>
+              ) : (
+                plainSideGroups.map((group, gi) => (
+                  <span key={gi} className="diff-codon-group">
+                    {group.map((c, j) => (
+                      <span key={j} className={'diff-nt ' + baseClass(c) + (gi >= correctGapIndex && gi < correctGapIndex + numGapBoxes ? ' diff-highlight' : '')}>{c}</span>
+                    ))}
+                  </span>
+                ))
+              )}
             </div>
             <div className="diff-row">
-              <span className="diff-label">Yours ({mutant.nucleotide_sequence.length}nt)</span>
-              {mutGroups.map((group, gi) => (
-                <span key={gi} className="diff-codon-group">
-                  {group.map((c, j) => (
-                    <span key={j} className={'diff-nt' + (gi >= correctGapIndex && gi < correctGapIndex + numGapBoxes ? ' diff-highlight' : '')}>{c}</span>
+              <span className="diff-label">Yours ({variant.nucleotideSequence.length}nt)</span>
+              {isInsertion ? (
+                plainSideGroups.map((group, gi) => (
+                  <span key={gi} className="diff-codon-group">
+                    {group.map((c, j) => (
+                      <span key={j} className={'diff-nt ' + baseClass(c) + (gi >= correctGapIndex && gi < correctGapIndex + numGapBoxes ? ' diff-highlight' : '')}>{c}</span>
+                    ))}
+                  </span>
+                ))
+              ) : (
+                <>
+                  {gapSideBefore.map((codon, gi) => (
+                    <span key={`b${gi}`} className="diff-codon-group">
+                      {codon.map((c, j) => <span key={j} className={'diff-nt ' + baseClass(c)}>{c}</span>)}
+                    </span>
                   ))}
-                </span>
-              ))}
+                  {gapBoxes.map((box, gi) => (
+                    <span key={`g${gi}`} className="diff-codon-group diff-highlight">
+                      {box.map((cell, j) => (
+                        <span key={j} className={'diff-nt' + (cell.blank ? ' diff-blank' : ' diff-dim ' + baseClass(cell.letter))}>
+                          {cell.blank ? '-' : cell.letter}
+                        </span>
+                      ))}
+                    </span>
+                  ))}
+                  {gapSideAfter.map((codon, gi) => (
+                    <span key={`a${gi}`} className="diff-codon-group">
+                      {codon.map((c, j) => <span key={j} className={'diff-nt ' + baseClass(c)}>{c}</span>)}
+                    </span>
+                  ))}
+                </>
+              )}
             </div>
           </div>
           {stage === 'confirm' && (
@@ -250,13 +315,13 @@ export default function Level4() {
         <div className="compare-panel">
           <h3>Re-split into codons of 3, starting from position 1, and assign amino acids</h3>
           <p className="hint">
-            The reading frame doesn't reset at the insertion — it just keeps reading in groups of 3 from the start.
-            Assign each new codon its amino acid, same as before. Codons after a STOP is reached are shown greyed
-            out — translation halts there, so there's nothing to assign.
+            The reading frame doesn't reset at the {isInsertion ? 'insertion' : 'deletion'} — it just keeps reading in groups
+            of 3 from the start. Assign each new codon its amino acid, same as before. Codons after a STOP is reached are
+            shown greyed out — translation halts there, so there's nothing to assign.
           </p>
           <CodonAssigner
-            sequence={mutant.nucleotide_sequence}
-            aminoLetters={mutant.new_amino_acid_sequence_until_stop}
+            sequence={variant.nucleotideSequence}
+            aminoLetters={variant.newAminoAcidSequenceUntilStop}
             activeCount={frameshiftAaLength}
             onComplete={(built, ok) => {
               setBuiltAminoAcids(built);
@@ -271,7 +336,7 @@ export default function Level4() {
 
       {stage === 'effects' && (
         <MutationEffectsCard
-          mutant={mutant}
+          variant={variant}
           reference={reference}
           gapIndex={correctGapIndex}
           builtAminoAcids={builtAminoAcids}
@@ -359,19 +424,19 @@ function Vardle({ answer, onSolved }) {
           </div>
         </div>
       )}
-      {solved && <p className="result-ok">✓ Solved — the 5 inserted letters are {answer}.</p>}
+      {solved && <p className="result-ok">✓ Solved — the inserted letters are {answer}.</p>}
     </div>
   );
 }
 
-function MutationEffectsCard({ mutant, reference, gapIndex, builtAminoAcids, hitPrematureStop, onContinue }) {
-  const yourProtein = builtAminoAcids || mutant.new_amino_acid_sequence_until_stop;
-  const yourCodons = mutant.new_codons_from_position_1;
+function MutationEffectsCard({ variant, reference, gapIndex, builtAminoAcids, hitPrematureStop, onContinue }) {
+  const yourProtein = builtAminoAcids || variant.newAminoAcidSequenceUntilStop;
+  const yourCodons = variant.newCodons;
   const refLen = reference.amino_acid_sequence.length;
   return (
     <div className="compare-panel">
       <h3>What just happened?</h3>
-      <p className="classification">{mutant.insertion_details.why_multiple_of_3_matters}</p>
+      <p className="classification">{variant.whyMultipleOf3Matters}</p>
 
       <p className="hint">Compare the reference protein to what your frameshifted sequence actually translates to — the codon that produced each amino acid is shown in small text above it:</p>
       <div className="diff-view">
@@ -450,7 +515,7 @@ function OrfExplainStage({ geneKey, reference, onAnswered }) {
         {sd.upstream_sequence.split('').map((c, i) => {
           const isHighlighted = hasHighlight && i >= highlightStart && i < highlightEnd;
           return (
-            <span key={`up-${i}`} className={'orf-upstream-nt' + (isHighlighted ? ' orf-upstream-highlight' : '')}>
+            <span key={`up-${i}`} className={'orf-upstream-nt ' + baseClass(c) + (isHighlighted ? ' orf-upstream-highlight' : '')}>
               {c}
             </span>
           );

@@ -3,6 +3,7 @@ import RulesPanel from '../components/RulesPanel';
 import PointsBanner from '../components/PointsBanner';
 import { usePlayer } from '../state/PlayerContext';
 import data from '../data/level5.json';
+import { baseClass } from '../utils/bases';
 
 const GENES = ['jlpA', 'cadF', 'ciaB'];
 
@@ -76,7 +77,7 @@ export default function Level5() {
               return (
                 <span key={i} className="methylation-nt-col">
                   {isMethylated && <span className="methylation-blob" title="Methylated base">🔵</span>}
-                  <span className={'diff-nt' + (isMethylated ? ' motif-nt-selected' : '')}>{n}</span>
+                  <span className={'diff-nt ' + baseClass(n) + (isMethylated ? ' motif-nt-selected' : '')}>{n}</span>
                 </span>
               );
             })}
@@ -149,7 +150,7 @@ function Round2({ onDone }) {
           return (
             <span key={i} className="methylation-nt-col">
               {isMethylatedNow && <span className="methylation-blob" title="Methylated base">🔵</span>}
-              <span className={'diff-nt' + (isHit ? ' motif-nt-selected' : '')}>{n}</span>
+              <span className={'diff-nt ' + baseClass(n) + (isHit ? ' motif-nt-selected' : '')}>{n}</span>
             </span>
           );
         })}
